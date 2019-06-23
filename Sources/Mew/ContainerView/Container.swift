@@ -17,7 +17,7 @@ extension ContainerView {
     /// Lazy given generics for ContainerView
     /// - Content: ViewController / ViewControllerResponseWrapper<ViewControllerRequest>
     /// - Parent: The parentViewController
-    /// It will support Injectable/Interactable if Content is support it.
+    /// It will support Injectable/Emittable if Content is support it.
     /// e.g. )
     /// ```
     /// @IBOutlet weak var myContainerView: ContainerView!
@@ -34,13 +34,13 @@ extension ContainerView {
         Parent: UIViewController,
         Content: Instantiatable,
         Content: UIViewController,
-        Parent.Environment == Content.Environment  {
+        Parent.Environment == Content.Environment {
         var contents: [Content] = [] {
             didSet {
                 contentsHandler?(contents)
             }
         }
-        var contentsHandler: (([Content]) -> ())?
+        var contentsHandler: (([Content]) -> Void)?
         var prev: ContainerViewContainerProtocol?
         weak var base: ContainerView?
         weak var parentViewController: Parent?
@@ -74,14 +74,14 @@ extension ContainerView.Container: Injectable where Content: Injectable {
         zip(contents, inputs)
             .forEach { viewController, input in
                 viewController.input(input)
-        }
+            }
 
         if inputs.count < contents.count {
             let range = inputs.count..<contents.count
             contents[range]
                 .forEach { viewController in
                     base.removeArrangedViewController(viewController)
-            }
+                }
             contents.removeSubrange(range)
         }
 
@@ -91,12 +91,12 @@ extension ContainerView.Container: Injectable where Content: Injectable {
                     let viewController = Content.instantiate(input, environment: parentViewController.environment)
                     base.insertArrangedViewController(viewController, stackIndex: insertIndex, parentViewController: parentViewController)
                     contents.append(viewController)
-            }
+                }
         }
     }
 }
 
-extension ContainerView.Container: Interactable where Content: Interactable {
+extension ContainerView.Container: Emittable where Content: Emittable {
     public typealias Output = Content.Output
 
     /// The output values that including all contained viewControllers output.

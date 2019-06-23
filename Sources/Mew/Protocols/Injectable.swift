@@ -15,14 +15,14 @@
 ///
 /// `Input` can be shared with `Instantiatable.Input`.
 ///
-/// If you want to implement completion handlers, please use `Interactable` instead.
+/// If you want to implement completion handlers, please use `Emittable` instead.
 public protocol Injectable {
     associatedtype Input
     func input(_ input: Input)
 }
 
 public extension Injectable where Input == Void {
-    public func input(_ input: Input) {
+    func input(_ input: Input) {
 
     }
 }

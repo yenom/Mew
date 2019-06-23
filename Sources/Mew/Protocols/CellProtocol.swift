@@ -15,11 +15,11 @@ internal protocol CellProtocol: AnyObject {
     var parentViewController: UIViewController? { get set }
 }
 
-extension CellProtocol where Self: UIView  {
+extension CellProtocol where Self: UIView {
     internal static var reuseIdentifier: String {
         return String(describing: ObjectIdentifier(Content.self).hashValue)
     }
-    
+
     internal func _willMove(to newSuperview: UIView?) {
         guard let contentViewController = contentViewController else { return }
         if newSuperview == nil {

@@ -15,7 +15,7 @@
 ///
 /// `Input` can be shared with `Injectable.Input`.
 ///
-/// If you want to implement completion handlers, please use `Interactable` instead.
+/// If you want to implement completion handlers, please use `Emittable` instead.
 ///
 /// ## associatedtype Environtment
 /// `Environment` is a dependency resolver.
@@ -27,13 +27,13 @@ public protocol Instantiatable {
 }
 
 public extension Instantiatable {
-    public static func instantiate(_ input: Input, environment: Environment) -> Self {
-        return Self.init(with: input, environment: environment)
+    static func instantiate(_ input: Input, environment: Environment) -> Self {
+        return Self(with: input, environment: environment)
     }
 }
 
 public extension Instantiatable where Input == Void {
-    public static func instantiate(environment: Environment) -> Self {
-        return Self.init(with: (), environment: environment)
+    static func instantiate(environment: Environment) -> Self {
+        return Self(with: (), environment: environment)
     }
 }

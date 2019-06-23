@@ -46,7 +46,7 @@ public extension TableViewCell {
     /// Register dequeueable cell class for tableView
     ///
     /// - Parameter tableView: Parent tableView
-    public static func register(to tableView: UITableView) {
+    static func register(to tableView: UITableView) {
         tableView.register(TableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
     }
 }
@@ -60,7 +60,7 @@ public extension TableViewCell where T: Injectable, T: Instantiatable {
     ///   - input: The ViewController's input.
     ///   - parentViewController: ParentViewController that must has tableView.
     /// - Returns: The Cell instance that added the ViewController.view, and the ViewController have injected dependency, VC hierarchy.
-    public static func dequeued<V>(from tableView: UITableView, for indexPath: IndexPath, input: T.Input, parentViewController: V) -> TableViewCell where V: UIViewController, V: Instantiatable, T.Environment == V.Environment {
+    static func dequeued<V>(from tableView: UITableView, for indexPath: IndexPath, input: T.Input, parentViewController: V) -> TableViewCell where V: UIViewController, V: Instantiatable, T.Environment == V.Environment {
         // Swift4.1 has bug that `Cast from 'X' to unrelated type 'Y<T>' always fails` if T is class and has protocol condition.
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCell.reuseIdentifier, for: indexPath) as Any as! TableViewCell
         if cell.contentViewController == nil {
@@ -73,7 +73,7 @@ public extension TableViewCell where T: Injectable, T: Instantiatable {
     }
 }
 
-public extension TableViewCell where T: Injectable, T: Instantiatable, T: Interactable {
+public extension TableViewCell where T: Injectable, T: Instantiatable, T: Emittable {
     /// Dequeue cell instance from tableView
     ///
     /// - Parameters:
@@ -83,7 +83,7 @@ public extension TableViewCell where T: Injectable, T: Instantiatable, T: Intera
     ///   - output: Handler for ViewController's output. Start handling when cell init. Don't replace handler when cell reused.
     ///   - parentViewController: ParentViewController that must has tableView.
     /// - Returns: The Cell instance that added the ViewController.
-    public static func dequeued<V>(from tableView: UITableView, for indexPath: IndexPath, input: T.Input, output: ((T.Output) -> ())?, parentViewController: V) -> TableViewCell where V: UIViewController, V: Instantiatable, T.Environment == V.Environment {
+    static func dequeued<V>(from tableView: UITableView, for indexPath: IndexPath, input: T.Input, output: ((T.Output) -> Void)?, parentViewController: V) -> TableViewCell where V: UIViewController, V: Instantiatable, T.Environment == V.Environment {
         // Swift4.1 has bug that `Cast from 'X' to unrelated type 'Y<T>' always fails` if T is class and has protocol condition.
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCell.reuseIdentifier, for: indexPath) as Any as! TableViewCell
         if cell.contentViewController == nil {
