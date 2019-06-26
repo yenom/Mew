@@ -18,6 +18,9 @@
 		29350EB622BF04C0003A86B4 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29350EB222BF04BF003A86B4 /* TableViewCell.swift */; };
 		29350EB722BF04C0003A86B4 /* TableViewHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29350EB322BF04C0003A86B4 /* TableViewHeaderFooterView.swift */; };
 		29350EB822BF04C0003A86B4 /* CollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29350EB422BF04C0003A86B4 /* CollectionReusableView.swift */; };
+		29D7467922C2F85900C9FCF4 /* EnvironmentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D7467822C2F85900C9FCF4 /* EnvironmentRequest.swift */; };
+		29D7468722C2FC2700C9FCF4 /* ViewControllerRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D7468622C2FC2700C9FCF4 /* ViewControllerRequest.swift */; };
+		29D7468922C2FC3000C9FCF4 /* ViewControllerResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D7468822C2FC3000C9FCF4 /* ViewControllerResponse.swift */; };
 		D2568DE6214BC86800FCA44A /* CollectionViewCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2568DE3214BC86400FCA44A /* CollectionViewCellTests.swift */; };
 		D2568DE7214BC86800FCA44A /* TableViewCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2568DE2214BC86400FCA44A /* TableViewCellTests.swift */; };
 		D2568DEF214BCA3B00FCA44A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2568DEE214BCA3B00FCA44A /* AppDelegate.swift */; };
@@ -63,6 +66,9 @@
 		29350EB222BF04BF003A86B4 /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		29350EB322BF04C0003A86B4 /* TableViewHeaderFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewHeaderFooterView.swift; sourceTree = "<group>"; };
 		29350EB422BF04C0003A86B4 /* CollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionReusableView.swift; sourceTree = "<group>"; };
+		29D7467822C2F85900C9FCF4 /* EnvironmentRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentRequest.swift; sourceTree = "<group>"; };
+		29D7468622C2FC2700C9FCF4 /* ViewControllerRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerRequest.swift; sourceTree = "<group>"; };
+		29D7468822C2FC3000C9FCF4 /* ViewControllerResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerResponse.swift; sourceTree = "<group>"; };
 		D2568DE2214BC86400FCA44A /* TableViewCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCellTests.swift; sourceTree = "<group>"; };
 		D2568DE3214BC86400FCA44A /* CollectionViewCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCellTests.swift; sourceTree = "<group>"; };
 		D2568DEC214BCA3B00FCA44A /* MewTestsApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MewTestsApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -108,6 +114,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		29D7467722C2F7B700C9FCF4 /* Environment */ = {
+			isa = PBXGroup;
+			children = (
+				29D7467822C2F85900C9FCF4 /* EnvironmentRequest.swift */,
+				29D7468822C2FC3000C9FCF4 /* ViewControllerResponse.swift */,
+				29D7468622C2FC2700C9FCF4 /* ViewControllerRequest.swift */,
+			);
+			path = Environment;
+			sourceTree = "<group>";
+		};
 		D2568DD7214BC00A00FCA44A /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -223,6 +239,7 @@
 		OBJ_8 /* Mew */ = {
 			isa = PBXGroup;
 			children = (
+				29D7467722C2F7B700C9FCF4 /* Environment */,
 				D25C01C621620BEC00935A18 /* Utils */,
 				D279A3042136B31A007B045A /* Protocols */,
 				D279A3052136B31F007B045A /* ContainerView */,
@@ -357,12 +374,15 @@
 			buildActionMask = 0;
 			files = (
 				29350EAB22BF0491003A86B4 /* CellProtocol.swift in Sources */,
+				29D7468922C2FC3000C9FCF4 /* ViewControllerResponse.swift in Sources */,
 				D25C01C821620C0100935A18 /* BackwardCompatibility.swift in Sources */,
 				29350EB522BF04C0003A86B4 /* CollectionViewCell.swift in Sources */,
 				29350EAA22BF0491003A86B4 /* Interactable.swift in Sources */,
+				29D7468722C2FC2700C9FCF4 /* ViewControllerRequest.swift in Sources */,
 				29350EA822BF0491003A86B4 /* Instantiatable.swift in Sources */,
 				29350EB622BF04C0003A86B4 /* TableViewCell.swift in Sources */,
 				29350EA922BF0491003A86B4 /* Emittable.swift in Sources */,
+				29D7467922C2F85900C9FCF4 /* EnvironmentRequest.swift in Sources */,
 				29350EB722BF04C0003A86B4 /* TableViewHeaderFooterView.swift in Sources */,
 				29350EB022BF04AB003A86B4 /* ContainerView.swift in Sources */,
 				29350EB822BF04C0003A86B4 /* CollectionReusableView.swift in Sources */,

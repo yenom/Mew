@@ -44,7 +44,7 @@ https://www.icloud.com/keynote/0vgTYDXyHQTd0l1FKTiF1jT7g#MicroViewController-en
 ----|---- 
 | ContainerView | ✅ |
 | Container<T> | ✅ |
-| Environment, Testing support | WIP |
+| Environment, Testing support | ✅ |
 | UITableView support | ✅ |
 | UICollectionView support | ✅ |
 
@@ -61,5 +61,6 @@ https://www.mercari.com/cla/
 ## License
 
 Copyright 2018 Mercari, Inc.
+Copyright 2019 Yenom, Inc.
 
 Licensed under the MIT License.
