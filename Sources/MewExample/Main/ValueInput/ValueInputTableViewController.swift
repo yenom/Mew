@@ -12,7 +12,7 @@ import Mew
 /// A form for inputting a number.
 /// Supports being pushed or presented.
 /// Outputs numberInput when the Done button is tapped
-final class ValueInputTableViewController: UIViewController, Instantiatable, Interactable, UITableViewDelegate, UITableViewDataSource {
+final class ValueInputTableViewController: UIViewController, Instantiatable, Emittable, UITableViewDelegate, UITableViewDataSource {
     typealias Environment = EnvironmentMock
 
     struct Model {

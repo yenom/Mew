@@ -11,7 +11,7 @@ import Mew
 
 /// Displays the addition of two Int values.
 /// Sends a reset signal if the Reset button is tapped.
-final class ResultLabelViewController: UIViewController, Instantiatable, Injectable, Interactable {
+final class ResultLabelViewController: UIViewController, Instantiatable, Interactable {
     typealias Environment = EnvironmentMock
     struct Model {
         var x: Int
