@@ -44,7 +44,7 @@ extension UIView {
     }
 }
 
-final class ViewController: UIViewController, Injectable, Instantiatable, Interactable {
+final class ViewController: UIViewController, Instantiatable, Interactable {
     typealias Input = Int
     var parameter: Int
     var handler: ((Int) -> ())?
@@ -297,7 +297,7 @@ final class AutolayoutCollectionViewController: UICollectionViewController, Inst
         super.viewDidLoad()
         CollectionViewCell<AutolayoutViewController>.register(to: collectionView!)
         if #available(iOS 10.0, *) {
-            flowLayout.itemSize = UICollectionViewFlowLayoutAutomaticSize
+            flowLayout.itemSize = UICollectionViewFlowLayout.automaticSize
         }
         flowLayout.estimatedItemSize = CGSize(width: 200.0, height: 200.0)
         flowLayout.sectionInset = UIEdgeInsets(top: 20.0, left: 20.0, bottom: 20.0, right: 20.0)

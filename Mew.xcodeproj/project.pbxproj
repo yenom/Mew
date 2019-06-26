@@ -21,6 +21,7 @@
 		29D7467922C2F85900C9FCF4 /* EnvironmentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D7467822C2F85900C9FCF4 /* EnvironmentRequest.swift */; };
 		29D7468722C2FC2700C9FCF4 /* ViewControllerRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D7468622C2FC2700C9FCF4 /* ViewControllerRequest.swift */; };
 		29D7468922C2FC3000C9FCF4 /* ViewControllerResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D7468822C2FC3000C9FCF4 /* ViewControllerResponse.swift */; };
+		29EEB8B622C36F41004A1F06 /* _ContainerInterfaceBuilderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29350EAC22BF04AB003A86B4 /* _ContainerInterfaceBuilderView.xib */; };
 		D2568DE6214BC86800FCA44A /* CollectionViewCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2568DE3214BC86400FCA44A /* CollectionViewCellTests.swift */; };
 		D2568DE7214BC86800FCA44A /* TableViewCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2568DE2214BC86400FCA44A /* TableViewCellTests.swift */; };
 		D2568DEF214BCA3B00FCA44A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2568DEE214BCA3B00FCA44A /* AppDelegate.swift */; };
@@ -275,6 +276,7 @@
 			buildPhases = (
 				OBJ_20 /* Sources */,
 				OBJ_22 /* Frameworks */,
+				29EEB8B522C36F3A004A1F06 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -347,6 +349,14 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		29EEB8B522C36F3A004A1F06 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				29EEB8B622C36F41004A1F06 /* _ContainerInterfaceBuilderView.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D2568DEA214BCA3B00FCA44A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;

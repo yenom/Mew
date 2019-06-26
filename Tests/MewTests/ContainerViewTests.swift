@@ -51,14 +51,14 @@ class ContainerViewTests: XCTestCase {
             let view = ContainerView()
             view.estimatedWidth = 100
             view.prepareForInterfaceBuilder()
-            XCTAssert(view.subviewTreeContains { $0.constraints.contains { $0.firstAttribute == NSLayoutAttribute.width && $0.constant == 100 } })
+            XCTAssert(view.subviewTreeContains { $0.constraints.contains { $0.firstAttribute == NSLayoutConstraint.Attribute.width && $0.constant == 100 } })
         }
 
         do {
             let view = ContainerView()
             view.estimatedHeight = 100
             view.prepareForInterfaceBuilder()
-            XCTAssert(view.subviewTreeContains { $0.constraints.contains { $0.firstAttribute == NSLayoutAttribute.height && $0.constant == 100 } })
+            XCTAssert(view.subviewTreeContains { $0.constraints.contains { $0.firstAttribute == NSLayoutConstraint.Attribute.height && $0.constant == 100 } })
         }
     }
 
@@ -101,7 +101,7 @@ class ContainerViewTests: XCTestCase {
         let viewController = ContainerViewController(with: (), environment: ())
         let container1 = viewController.containerView.makeContainer(for: ContainedViewController.self, parentViewController: viewController, with: 1)
         XCTAssertEqual(container1.insertIndex, 1)
-        XCTAssertTrue(viewController.childViewControllers.contains(where: { $0 is ContainedViewController }))
+        XCTAssertTrue(viewController.children.contains(where: { $0 is ContainedViewController }))
     }
 
     func testContainerForInjectable() {
@@ -137,42 +137,42 @@ class ContainerViewTests: XCTestCase {
         let container3 = viewController.containerView.makeContainer(for: ContainedViewController.self, parentViewController: viewController)
 
         XCTAssertEqual(viewController.containerView.arrangedSubviews.count, 0)
-        XCTAssertEqual(viewController.childViewControllers.count, 0)
+        XCTAssertEqual(viewController.children.count, 0)
 
         container1.inputs([1, 2, 3])
 
         XCTAssertEqual(viewController.containerView.arrangedSubviews.count, 3)
-        XCTAssertEqual(viewController.childViewControllers.count, 3)
+        XCTAssertEqual(viewController.children.count, 3)
         XCTAssertEqual(viewController.containerView.arrangedSubviews.map { $0 as! ContainedView }.map { $0.param }, [1, 2, 3])
 
         container2.inputs([4, 5, 6])
 
         XCTAssertEqual(viewController.containerView.arrangedSubviews.count, 6)
-        XCTAssertEqual(viewController.childViewControllers.count, 6)
+        XCTAssertEqual(viewController.children.count, 6)
         XCTAssertEqual(viewController.containerView.arrangedSubviews.map { $0 as! ContainedView }.map { $0.param }, [1, 2, 3, 4, 5, 6])
 
         container3.inputs([7, 8, 9])
 
         XCTAssertEqual(viewController.containerView.arrangedSubviews.count, 9)
-        XCTAssertEqual(viewController.childViewControllers.count, 9)
+        XCTAssertEqual(viewController.children.count, 9)
         XCTAssertEqual(viewController.containerView.arrangedSubviews.map { $0 as! ContainedView }.map { $0.param }, [1, 2, 3, 4, 5, 6, 7, 8, 9])
 
         container2.input(nil)
 
         XCTAssertEqual(viewController.containerView.arrangedSubviews.count, 6)
-        XCTAssertEqual(viewController.childViewControllers.count, 6)
+        XCTAssertEqual(viewController.children.count, 6)
         XCTAssertEqual(viewController.containerView.arrangedSubviews.map { $0 as! ContainedView }.map { $0.param }, [1, 2, 3, 7, 8, 9])
 
         container1.inputs([4, 5])
 
         XCTAssertEqual(viewController.containerView.arrangedSubviews.count, 5)
-        XCTAssertEqual(viewController.childViewControllers.count, 5)
+        XCTAssertEqual(viewController.children.count, 5)
         XCTAssertEqual(viewController.containerView.arrangedSubviews.map { $0 as! ContainedView }.map { $0.param }, [4, 5, 7, 8, 9])
 
         container2.input(6)
 
         XCTAssertEqual(viewController.containerView.arrangedSubviews.count, 6)
-        XCTAssertEqual(viewController.childViewControllers.count, 6)
+        XCTAssertEqual(viewController.children.count, 6)
         XCTAssertEqual(viewController.containerView.arrangedSubviews.map { $0 as! ContainedView }.map { $0.param }, [4, 5, 6, 7, 8, 9])
 
     }
@@ -181,7 +181,7 @@ class ContainerViewTests: XCTestCase {
         final class ContainedView: UIView {
             var param: Int = 0
         }
-        final class ContainedViewController: ResourceContingViewController, Instantiatable, Injectable, Interactable {
+        final class ContainedViewController: ResourceContingViewController, Instantiatable, Interactable {
             let environment: Void
             var handler: ((ContainedViewController.Output) -> Void)?
             lazy var _view: ContainedView = {
@@ -237,7 +237,7 @@ class ContainerViewTests: XCTestCase {
         }
 
         container1.inputs([1, 2, 3])
-        viewController.childViewControllers
+        viewController.children
             .compactMap { $0 as? ContainedViewController }
             .forEach { (childViewController) in
                 childViewController.fire()
@@ -249,7 +249,7 @@ class ContainerViewTests: XCTestCase {
 
         reset()
         container2.inputs([4, 5, 6])
-        viewController.childViewControllers
+        viewController.children
             .compactMap { $0 as? ContainedViewController }
             .forEach { (childViewController) in
                 childViewController.fire()
@@ -261,7 +261,7 @@ class ContainerViewTests: XCTestCase {
 
         reset()
         container3.inputs([7, 8, 9])
-        viewController.childViewControllers
+        viewController.children
             .compactMap { $0 as? ContainedViewController }
             .forEach { (childViewController) in
                 childViewController.fire()
@@ -273,7 +273,7 @@ class ContainerViewTests: XCTestCase {
 
         reset()
         container2.input(nil)
-        viewController.childViewControllers
+        viewController.children
             .compactMap { $0 as? ContainedViewController }
             .forEach { (childViewController) in
                 childViewController.fire()
@@ -285,7 +285,7 @@ class ContainerViewTests: XCTestCase {
 
         reset()
         container1.inputs([4, 5])
-        viewController.childViewControllers
+        viewController.children
             .compactMap { $0 as? ContainedViewController }
             .forEach { (childViewController) in
                 childViewController.fire()
@@ -297,7 +297,7 @@ class ContainerViewTests: XCTestCase {
 
         reset()
         container2.input(6)
-        viewController.childViewControllers
+        viewController.children
             .compactMap { $0 as? ContainedViewController }
             .forEach { (childViewController) in
                 childViewController.fire()

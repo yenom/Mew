@@ -118,7 +118,7 @@ class TableViewCellTests: XCTestCase {
             zip(expects, cells).forEach { expect, cell in
                 XCTAssertEqual(cell.frame.size, CGSize(width: tableViewController.tableView.frame.width, height: 200 + expect.additionalHeight + 0.5))
                 XCTAssertEqual(cell.contentView.frame.size, CGSize(width: tableViewController.tableView.frame.width, height: 200 + expect.additionalHeight))
-                let childViewController = tableViewController.childViewControllers.first(where: { $0.view.superview == cell.contentView }) as! AutolayoutViewController
+                let childViewController = tableViewController.children.first(where: { $0.view.superview == cell.contentView }) as! AutolayoutViewController
                 XCTAssertEqual(childViewController.view.frame.size, CGSize(width: min(tableViewController.tableView.frame.width, 200 + expect.additionalWidth), height: 200 + expect.additionalHeight))
                 XCTAssertFalse(cell.hasAmbiguousLayout)
             }
