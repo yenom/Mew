@@ -64,7 +64,7 @@ public class CollectionReusableView<T: UIViewController>: UICollectionReusableVi
 }
 
 public extension CollectionReusableView {
-    /// Register dequeueable cell class for collectionView
+    /// Register dequeueable header/footer class for collectionView
     ///
     /// - Parameter collectionView: Parent collectionView
     @available(*, deprecated, message: "Please use YourViewController.register(to:for:) instead")
@@ -74,7 +74,7 @@ public extension CollectionReusableView {
 }
 
 public extension CollectionReusableView where T: Injectable, T: Instantiatable {
-    /// Dequeue cell instance from collectionView
+    /// Dequeue header/footer instance from collectionView
     ///
     /// - Parameters:
     ///   - collectionView: Parent collectionView that must have registered cell.
@@ -82,7 +82,7 @@ public extension CollectionReusableView where T: Injectable, T: Instantiatable {
     ///   - input: The ViewController's input.
     ///   - sizeConstraint: Requirement maximum size of Cell.
     ///   - parentViewController: ParentViewController that must has collectionView.
-    /// - Returns: The Cell instance that added the ViewController.view, and the ViewController have injected dependency, VC hierarchy.
+    /// - Returns: The header/footer instance that added the ViewController.view, and the ViewController have injected dependency, VC hierarchy.
     @available(*, deprecated, message: "Please use YourViewController.dequeueReusableSupplementaryView(from:of:for:input:sizeConstraint:parentViewController:) instead")
     static func dequeued<V>(from collectionView: UICollectionView, of kind: String, for indexPath: IndexPath, input: T.Input, sizeConstraint: SizeConstraint? = nil, parentViewController: V) -> CollectionReusableView where V: UIViewController, V: Instantiatable, T.Environment == V.Environment {
         // Swift4.1 has bug that `Cast from 'X' to unrelated type 'Y<T>' always fails` if T is class and has protocol condition.
@@ -98,7 +98,7 @@ public extension CollectionReusableView where T: Injectable, T: Instantiatable {
 }
 
 public extension CollectionReusableView where T: Injectable, T: Instantiatable, T: Emittable {
-    /// Dequeue cell instance from collectionView
+    /// Dequeue header/footer instance from collectionView
     ///
     /// - Parameters:
     ///   - collectionView: Parent collectionView that must have registered cell.
