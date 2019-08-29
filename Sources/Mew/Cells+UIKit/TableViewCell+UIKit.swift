@@ -13,7 +13,7 @@ public extension Instantiatable where Self: UIViewController, Self: Injectable {
     /// Register dequeueable cell class for tableView
     ///
     /// - Parameter tableView: Parent tableView
-    static func register(to tableView: UITableView) {
+    static func register(on tableView: UITableView) {
         TableViewCell<Self>.register(to: tableView)
     }
     
@@ -50,8 +50,8 @@ public extension Instantiatable where Self: UIView, Self: Injectable {
     /// Register dequeueable cell class for tableView
     ///
     /// - Parameter tableView: Parent tableView
-    static func register(to tableView: UITableView) {
-        ViewController<Self>.register(to: tableView)
+    static func register(on tableView: UITableView) {
+        ViewController<Self>.register(on: tableView)
     }
     
     /// Dequeue Injectable cell instance from tableView

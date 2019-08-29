@@ -90,8 +90,8 @@ final class TableViewController: UITableViewController, Instantiatable {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        ViewController.register(to: tableView)
-        ViewController.registerAsHeaderFooter(to: tableView)
+        ViewController.register(on: tableView)
+        ViewController.registerHeaderFooterView(on: tableView)
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -127,8 +127,8 @@ final class CollectionViewController: UICollectionViewController, Instantiatable
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        ViewController.register(to: collectionView!)
-        ViewController.register(to: collectionView!, for: .header)
+        ViewController.register(on: collectionView!)
+        ViewController.registerHeaderFooterView(on: collectionView!, for: .header)
         collectionViewLayout.invalidateLayout()
         collectionView?.reloadData()
         collectionView?.layoutIfNeeded()
@@ -143,11 +143,11 @@ final class CollectionViewController: UICollectionViewController, Instantiatable
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return ViewController.dequeueReusableCell(from: collectionView, for: indexPath, input: elements[indexPath.row], parentViewController: self)
+        return ViewController.dequeueCell(from: collectionView, for: indexPath, input: elements[indexPath.row], parentViewController: self)
     }
 
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        return ViewController.dequeueReusableSupplementaryView(from: collectionView, of: kind, for: indexPath, input: elements.count, parentViewController: self)
+        return ViewController.dequeueHeaderFooterView(from: collectionView, of: kind, for: indexPath, input: elements.count, parentViewController: self)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
@@ -256,7 +256,7 @@ final class AutolayoutTableViewController: UITableViewController, Instantiatable
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        AutolayoutViewController.register(to: tableView)
+        AutolayoutViewController.register(on: tableView)
     }
 
     func input(_ input: [AutolayoutViewController.Input]) {
@@ -295,7 +295,7 @@ final class AutolayoutCollectionViewController: UICollectionViewController, Inst
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        AutolayoutViewController.register(to: collectionView!)
+        AutolayoutViewController.register(on: collectionView!)
         if #available(iOS 10.0, *) {
             flowLayout.itemSize = UICollectionViewFlowLayout.automaticSize
         }
@@ -317,6 +317,6 @@ final class AutolayoutCollectionViewController: UICollectionViewController, Inst
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return AutolayoutViewController.dequeueReusableCell(from: collectionView, for: indexPath, input: elements[indexPath.row], parentViewController: self)
+        return AutolayoutViewController.dequeueCell(from: collectionView, for: indexPath, input: elements[indexPath.row], parentViewController: self)
     }
 }
