@@ -25,7 +25,7 @@ public extension Instantiatable where Self: UIViewController, Self: Injectable {
     ///   - input: The ViewController's input.
     ///   - parentViewController: ParentViewController that must has tableView.
     /// - Returns: The Cell instance that added the ViewController.view, and the ViewController have injected dependency, VC hierarchy.
-    static func dequeueCell<V>(from tableView: UITableView, for indexPath: IndexPath, input: Self.Input, parentViewController: V) -> UITableViewCell where V: UIViewController, V: Instantiatable, Self.Environment == V.Environment {
+    static func dequeueAsTableViewCell<V>(from tableView: UITableView, for indexPath: IndexPath, input: Self.Input, parentViewController: V) -> UITableViewCell where V: UIViewController, V: Instantiatable, Self.Environment == V.Environment {
         return TableViewCell<Self>.dequeued(from: tableView, for: indexPath, input: input, parentViewController: parentViewController)
     }
 }
@@ -40,7 +40,7 @@ public extension Instantiatable where Self: UIViewController, Self: Injectable, 
     ///   - output: Handler for ViewController's output. Start handling when cell init. Don't replace handler when cell reused.
     ///   - parentViewController: ParentViewController that must has tableView.
     /// - Returns: The Cell instance that added the ViewController.
-    static func dequeueCell<V>(from tableView: UITableView, for indexPath: IndexPath, input: Self.Input, output: ((Self.Output) -> Void)?, parentViewController: V) -> UITableViewCell where V: UIViewController, V: Instantiatable, Self.Environment == V.Environment {
+    static func dequeueAsTableViewCell<V>(from tableView: UITableView, for indexPath: IndexPath, input: Self.Input, output: ((Self.Output) -> Void)?, parentViewController: V) -> UITableViewCell where V: UIViewController, V: Instantiatable, Self.Environment == V.Environment {
         return TableViewCell<Self>.dequeued(from: tableView, for: indexPath, input: input, output: output, parentViewController: parentViewController)
     }
 }
@@ -62,8 +62,8 @@ public extension Instantiatable where Self: UIView, Self: Injectable {
     ///   - input: The View's input.
     ///   - parentViewController: ParentViewController that must has tableView.
     /// - Returns: The Cell instance that added the View.
-    static func dequeueCell<V>(from tableView: UITableView, for indexPath: IndexPath, input: Self.Input, parentViewController: V) -> UITableViewCell where V: UIViewController, V: Instantiatable, Self.Environment == V.Environment {
-        return ViewController<Self>.dequeueCell(from: tableView, for: indexPath, input: input, parentViewController: parentViewController)
+    static func dequeueAsTableViewCell<V>(from tableView: UITableView, for indexPath: IndexPath, input: Self.Input, parentViewController: V) -> UITableViewCell where V: UIViewController, V: Instantiatable, Self.Environment == V.Environment {
+        return ViewController<Self>.dequeueAsTableViewCell(from: tableView, for: indexPath, input: input, parentViewController: parentViewController)
     }
 }
 
@@ -77,8 +77,8 @@ public extension Instantiatable where Self: UIView, Self: Injectable, Self: Emit
     ///   - output: Handler for View's output. Start handling when cell init. Don't replace handler when cell reused.
     ///   - parentViewController: ParentViewController that must has tableView.
     /// - Returns: The Cell instance that added the View.
-    static func dequeueCell<V>(from tableView: UITableView, for indexPath: IndexPath, input: Self.Input, output: ((Self.Output) -> Void)?, parentViewController: V) -> UITableViewCell where V: UIViewController, V: Instantiatable, Self.Environment == V.Environment {
-        return ViewController<Self>.dequeueCell(from: tableView, for: indexPath, input: input, output: output, parentViewController: parentViewController)
+    static func dequeueAsTableViewCell<V>(from tableView: UITableView, for indexPath: IndexPath, input: Self.Input, output: ((Self.Output) -> Void)?, parentViewController: V) -> UITableViewCell where V: UIViewController, V: Instantiatable, Self.Environment == V.Environment {
+        return ViewController<Self>.dequeueAsTableViewCell(from: tableView, for: indexPath, input: input, output: output, parentViewController: parentViewController)
     }
 }
 

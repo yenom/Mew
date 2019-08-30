@@ -103,11 +103,11 @@ final class TableViewController: UITableViewController, Instantiatable {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return ViewController.dequeueCell(from: tableView, for: indexPath, input: elements[indexPath.row], parentViewController: self)
+        return ViewController.dequeueAsTableViewCell(from: tableView, for: indexPath, input: elements[indexPath.row], parentViewController: self)
     }
 
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return ViewController.dequeueHeaderFooterView(from: tableView, input: elements.count, parentViewController: self)
+        return ViewController.dequeueAsTableViewHeaderFooterView(from: tableView, input: elements.count, parentViewController: self)
     }
 }
 
@@ -143,11 +143,11 @@ final class CollectionViewController: UICollectionViewController, Instantiatable
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return ViewController.dequeueCell(from: collectionView, for: indexPath, input: elements[indexPath.row], parentViewController: self)
+        return ViewController.dequeueAsCollectionViewCell(from: collectionView, for: indexPath, input: elements[indexPath.row], parentViewController: self)
     }
 
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        return ViewController.dequeueHeaderFooterView(from: collectionView, of: kind, for: indexPath, input: elements.count, parentViewController: self)
+        return ViewController.dequeueAsCollectionViewHeaderFooterView(from: collectionView, of: kind, for: indexPath, input: elements.count, parentViewController: self)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
@@ -273,7 +273,7 @@ final class AutolayoutTableViewController: UITableViewController, Instantiatable
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return AutolayoutViewController.dequeueCell(from: tableView, for: indexPath, input: elements[indexPath.row], parentViewController: self)
+        return AutolayoutViewController.dequeueAsTableViewCell(from: tableView, for: indexPath, input: elements[indexPath.row], parentViewController: self)
     }
 }
 
@@ -317,6 +317,6 @@ final class AutolayoutCollectionViewController: UICollectionViewController, Inst
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return AutolayoutViewController.dequeueCell(from: collectionView, for: indexPath, input: elements[indexPath.row], parentViewController: self)
+        return AutolayoutViewController.dequeueAsCollectionViewCell(from: collectionView, for: indexPath, input: elements[indexPath.row], parentViewController: self)
     }
 }

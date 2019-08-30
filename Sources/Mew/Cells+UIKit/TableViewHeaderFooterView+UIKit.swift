@@ -24,7 +24,7 @@ public extension Instantiatable where Self: UIViewController, Self: Injectable {
     ///   - input: The ViewController's input.
     ///   - parentViewController: ParentViewController that must has tableView.
     /// - Returns: The header/footer instance that added the ViewController.view, and the ViewController have injected dependency, VC hierarchy.
-    static func dequeueHeaderFooterView<V>(from tableView: UITableView, input: Self.Input, parentViewController: V) -> UITableViewHeaderFooterView where V: UIViewController, V: Instantiatable, Self.Environment == V.Environment {
+    static func dequeueAsTableViewHeaderFooterView<V>(from tableView: UITableView, input: Self.Input, parentViewController: V) -> UITableViewHeaderFooterView where V: UIViewController, V: Instantiatable, Self.Environment == V.Environment {
         return TableViewHeaderFooterView<Self>.dequeued(from: tableView, input: input, parentViewController: parentViewController)
     }
 }
@@ -38,7 +38,7 @@ public extension Instantiatable where Self: UIViewController, Self: Injectable, 
     ///   - output: Handler for ViewController's output. Start handling when cell init. Don't replace handler when cell reused.
     ///   - parentViewController: ParentViewController that must has tableView.
     /// - Returns: The header/footer instance that added the ViewController.
-    static func dequeueHeaderFooterView<V>(from tableView: UITableView, input: Self.Input, output: ((Self.Output) -> Void)?, parentViewController: V) -> UITableViewHeaderFooterView where V: UIViewController, V: Instantiatable, Self.Environment == V.Environment {
+    static func dequeueAsTableViewHeaderFooterView<V>(from tableView: UITableView, input: Self.Input, output: ((Self.Output) -> Void)?, parentViewController: V) -> UITableViewHeaderFooterView where V: UIViewController, V: Instantiatable, Self.Environment == V.Environment {
         return TableViewHeaderFooterView<Self>.dequeued(from: tableView, input: input, output: output, parentViewController: parentViewController)
     }
 }
@@ -60,8 +60,8 @@ public extension Instantiatable where Self: UIView, Self: Injectable {
     ///   - input: The View's input.
     ///   - parentViewController: ParentViewController that must has tableView.
     /// - Returns: The header/footer instance that added the View.
-    static func dequeueHeaderFooterView<V>(from tableView: UITableView, input: Self.Input, parentViewController: V) -> UITableViewHeaderFooterView where V: UIViewController, V: Instantiatable, Self.Environment == V.Environment {
-        return ViewController<Self>.dequeueHeaderFooterView(from: tableView, input: input, parentViewController: parentViewController)
+    static func dequeueAsTableViewHeaderFooterView<V>(from tableView: UITableView, input: Self.Input, parentViewController: V) -> UITableViewHeaderFooterView where V: UIViewController, V: Instantiatable, Self.Environment == V.Environment {
+        return ViewController<Self>.dequeueAsTableViewHeaderFooterView(from: tableView, input: input, parentViewController: parentViewController)
     }
 }
 
@@ -74,7 +74,7 @@ public extension Instantiatable where Self: UIView, Self: Injectable, Self: Emit
     ///   - output: Handler for View's output. Start handling when cell init. Don't replace handler when cell reused.
     ///   - parentViewController: ParentViewController that must has tableView.
     /// - Returns: The header/footer instance that added the View.
-    static func dequeueHeaderFooterView<V>(from tableView: UITableView, input: Self.Input, output: ((Self.Output) -> Void)?, parentViewController: V) -> UITableViewHeaderFooterView where V: UIViewController, V: Instantiatable, Self.Environment == V.Environment {
-        return ViewController<Self>.dequeueHeaderFooterView(from: tableView, input: input, output: output, parentViewController: parentViewController)
+    static func dequeueAsTableViewHeaderFooterView<V>(from tableView: UITableView, input: Self.Input, output: ((Self.Output) -> Void)?, parentViewController: V) -> UITableViewHeaderFooterView where V: UIViewController, V: Instantiatable, Self.Environment == V.Environment {
+        return ViewController<Self>.dequeueAsTableViewHeaderFooterView(from: tableView, input: input, output: output, parentViewController: parentViewController)
     }
 }
