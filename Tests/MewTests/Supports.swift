@@ -90,8 +90,8 @@ final class TableViewController: UITableViewController, Instantiatable {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        ViewController.register(on: tableView)
-        ViewController.registerHeaderFooterView(on: tableView)
+        ViewController.registerAsTableViewCell(on: tableView)
+        ViewController.registerAsTableViewHeaderFooterView(on: tableView)
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -127,8 +127,8 @@ final class CollectionViewController: UICollectionViewController, Instantiatable
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        ViewController.register(on: collectionView!)
-        ViewController.registerHeaderFooterView(on: collectionView!, for: .header)
+        ViewController.registerAsCollectionViewCell(on: collectionView!)
+        ViewController.registerAsCollectionViewHeaderFooterView(on: collectionView!, for: .header)
         collectionViewLayout.invalidateLayout()
         collectionView?.reloadData()
         collectionView?.layoutIfNeeded()
@@ -256,7 +256,7 @@ final class AutolayoutTableViewController: UITableViewController, Instantiatable
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        AutolayoutViewController.register(on: tableView)
+        AutolayoutViewController.registerAsTableViewCell(on: tableView)
     }
 
     func input(_ input: [AutolayoutViewController.Input]) {
@@ -295,7 +295,7 @@ final class AutolayoutCollectionViewController: UICollectionViewController, Inst
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        AutolayoutViewController.register(on: collectionView!)
+        AutolayoutViewController.registerAsCollectionViewCell(on: collectionView!)
         if #available(iOS 10.0, *) {
             flowLayout.itemSize = UICollectionViewFlowLayout.automaticSize
         }

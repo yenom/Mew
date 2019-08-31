@@ -13,7 +13,7 @@ public extension Instantiatable where Self: UIViewController, Self: Injectable {
     /// Register dequeueable header/footer class for tableView
     ///
     /// - Parameter tableView: Parent tableView
-    static func registerHeaderFooterView(on tableView: UITableView) {
+    static func registerAsTableViewHeaderFooterView(on tableView: UITableView) {
         TableViewHeaderFooterView<Self>.register(to: tableView)
     }
     
@@ -49,8 +49,8 @@ public extension Instantiatable where Self: UIView, Self: Injectable {
     /// Register dequeueable header/footer class for tableView
     ///
     /// - Parameter tableView: Parent tableView
-    static func registerHeaderFooterView(on tableView: UITableView) {
-        ViewController<Self>.registerHeaderFooterView(on: tableView)
+    static func registerAsTableViewHeaderFooterView(on tableView: UITableView) {
+        ViewController<Self>.registerAsTableViewHeaderFooterView(on: tableView)
     }
     
     /// Dequeue Injectable header/footer instance from tableView

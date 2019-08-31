@@ -13,7 +13,7 @@ public extension Instantiatable where Self: UIViewController, Self: Injectable {
     /// Register dequeueable header/footer class for collectionView
     ///
     /// - Parameter collectionView: Parent collectionView
-    static func registerHeaderFooterView(on collectionView: UICollectionView, for kind: CollectionViewSupplementaryKind) {
+    static func registerAsCollectionViewHeaderFooterView(on collectionView: UICollectionView, for kind: CollectionViewSupplementaryKind) {
         CollectionReusableView<Self>.register(to: collectionView, for: kind)
     }
     
@@ -53,8 +53,8 @@ public extension Instantiatable where Self: UIView, Self: Injectable {
     /// Register dequeueable header/footer class for collectionView
     ///
     /// - Parameter collectionView: Parent collectionView
-    static func registerHeaderFooterView(on collectionView: UICollectionView, for kind: CollectionViewSupplementaryKind) {
-        ViewController<Self>.registerHeaderFooterView(on: collectionView, for: kind)
+    static func registerAsCollectionViewHeaderFooterView(on collectionView: UICollectionView, for kind: CollectionViewSupplementaryKind) {
+        ViewController<Self>.registerAsCollectionViewHeaderFooterView(on: collectionView, for: kind)
     }
     
     /// Dequeue Injectable header/footer instance from collectionView

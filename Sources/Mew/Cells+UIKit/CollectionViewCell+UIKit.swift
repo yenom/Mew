@@ -13,7 +13,7 @@ public extension Instantiatable where Self: UIViewController, Self: Injectable {
     /// Register dequeueable cell class for collectionView
     ///
     /// - Parameter collectionView: Parent collectionView
-    static func register(on collectionView: UICollectionView) {
+    static func registerAsCollectionViewCell(on collectionView: UICollectionView) {
         CollectionViewCell<Self>.register(to: collectionView)
     }
 
@@ -52,8 +52,8 @@ public extension Instantiatable where Self: UIView, Self: Injectable {
     /// Register dequeueable cell class for collectionView
     ///
     /// - Parameter collectionView: Parent collectionView
-    static func register(on collectionView: UICollectionView) {
-        ViewController<Self>.register(on: collectionView)
+    static func registerAsCollectionViewCell(on collectionView: UICollectionView) {
+        ViewController<Self>.registerAsCollectionViewCell(on: collectionView)
     }
     
     /// Dequeue Injectable cell instance from collectionView
