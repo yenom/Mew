@@ -48,12 +48,12 @@ public extension Instantiatable where Self: UIViewController, Self: Injectable, 
 }
 
 // MARK: - CollectionViewCell with UIView
-public extension Instantiatable where Self: UIView, Self: Injectable {
+public extension Injectable where Self: UIView {
     /// Register dequeueable cell class for collectionView
     ///
     /// - Parameter collectionView: Parent collectionView
-    static func registerAsCollectionViewCell(on collectionView: UICollectionView) {
-        ViewController<Self>.registerAsCollectionViewCell(on: collectionView)
+    static func registerAsCollectionViewCell<Parent: UIViewController>(on collectionView: UICollectionView, parent: Parent.Type) where Parent: Instantiatable {
+        ViewController<Self, Parent>.registerAsCollectionViewCell(on: collectionView)
     }
     
     /// Dequeue Injectable cell instance from collectionView
@@ -65,12 +65,12 @@ public extension Instantiatable where Self: UIView, Self: Injectable {
     ///   - sizeConstraint: Requirement maximum size of Cell.
     ///   - parentViewController: ParentViewController that must has collectionView.
     /// - Returns: The Cell instance that added the ViewController.view, and the ViewController have injected dependency, VC hierarchy.
-    static func dequeueAsCollectionViewCell<V>(from collectionView: UICollectionView, for indexPath: IndexPath, input: Self.Input, sizeConstraint: SizeConstraint? = nil, parentViewController: V) -> UICollectionViewCell where V: UIViewController, V: Instantiatable, Self.Environment == V.Environment {
-        return ViewController<Self>.dequeueAsCollectionViewCell(from: collectionView, for: indexPath, input: input, sizeConstraint: sizeConstraint, parentViewController: parentViewController)
+    static func dequeueAsCollectionViewCell<V>(from collectionView: UICollectionView, for indexPath: IndexPath, input: Self.Input, sizeConstraint: SizeConstraint? = nil, parentViewController: V) -> UICollectionViewCell where V: UIViewController, V: Instantiatable {
+        return ViewController<Self, V>.dequeueAsCollectionViewCell(from: collectionView, for: indexPath, input: input, sizeConstraint: sizeConstraint, parentViewController: parentViewController)
     }
 }
 
-public extension Instantiatable where Self: UIView, Self: Injectable, Self: Emittable {
+public extension Injectable where Self: UIView, Self: Emittable {
     /// Dequeue Injectable/Emittable cell instance from collectionView
     ///
     /// - Parameters:
@@ -81,7 +81,7 @@ public extension Instantiatable where Self: UIView, Self: Injectable, Self: Emit
     ///   - sizeConstraint: Requirement maximum size of Cell.
     ///   - parentViewController: ParentViewController that must has collectionView.
     /// - Returns: The Cell instance that added the ViewController.
-    static func dequeueAsCollectionViewCell<V>(from collectionView: UICollectionView, for indexPath: IndexPath, input: Self.Input, output: ((Self.Output) -> Void)?, sizeConstraint: SizeConstraint? = nil, parentViewController: V) -> UICollectionViewCell where V: UIViewController, V: Instantiatable, Self.Environment == V.Environment {
-        return ViewController<Self>.dequeueAsCollectionViewCell(from: collectionView, for: indexPath, input: input, output: output, sizeConstraint: sizeConstraint, parentViewController: parentViewController)
+    static func dequeueAsCollectionViewCell<V>(from collectionView: UICollectionView, for indexPath: IndexPath, input: Self.Input, output: ((Self.Output) -> Void)?, sizeConstraint: SizeConstraint? = nil, parentViewController: V) -> UICollectionViewCell where V: UIViewController, V: Instantiatable {
+        return ViewController<Self, V>.dequeueAsCollectionViewCell(from: collectionView, for: indexPath, input: input, output: output, sizeConstraint: sizeConstraint, parentViewController: parentViewController)
     }
 }

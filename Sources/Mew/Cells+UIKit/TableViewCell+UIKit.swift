@@ -46,12 +46,12 @@ public extension Instantiatable where Self: UIViewController, Self: Injectable, 
 }
 
 // MARK: - TableViewCell with UIView
-public extension Instantiatable where Self: UIView, Self: Injectable {
+public extension Injectable where Self: UIView {
     /// Register dequeueable cell class for tableView
     ///
     /// - Parameter tableView: Parent tableView
-    static func registerAsTableViewCell(on tableView: UITableView) {
-        ViewController<Self>.registerAsTableViewCell(on: tableView)
+    static func registerAsTableViewCell<Parent: UIViewController>(on tableView: UITableView, parent: Parent.Type) where Parent: Instantiatable {
+        ViewController<Self, Parent>.registerAsTableViewCell(on: tableView)
     }
     
     /// Dequeue Injectable cell instance from tableView
@@ -62,12 +62,12 @@ public extension Instantiatable where Self: UIView, Self: Injectable {
     ///   - input: The View's input.
     ///   - parentViewController: ParentViewController that must has tableView.
     /// - Returns: The Cell instance that added the View.
-    static func dequeueAsTableViewCell<V>(from tableView: UITableView, for indexPath: IndexPath, input: Self.Input, parentViewController: V) -> UITableViewCell where V: UIViewController, V: Instantiatable, Self.Environment == V.Environment {
-        return ViewController<Self>.dequeueAsTableViewCell(from: tableView, for: indexPath, input: input, parentViewController: parentViewController)
+    static func dequeueAsTableViewCell<V>(from tableView: UITableView, for indexPath: IndexPath, input: Self.Input, parentViewController: V) -> UITableViewCell where V: UIViewController, V: Instantiatable {
+        return ViewController<Self, V>.dequeueAsTableViewCell(from: tableView, for: indexPath, input: input, parentViewController: parentViewController)
     }
 }
 
-public extension Instantiatable where Self: UIView, Self: Injectable, Self: Emittable {
+public extension Injectable where Self: UIView, Self: Emittable {
     /// Dequeue Injectable/Emittable cell instance from tableView
     ///
     /// - Parameters:
@@ -77,8 +77,8 @@ public extension Instantiatable where Self: UIView, Self: Injectable, Self: Emit
     ///   - output: Handler for View's output. Start handling when cell init. Don't replace handler when cell reused.
     ///   - parentViewController: ParentViewController that must has tableView.
     /// - Returns: The Cell instance that added the View.
-    static func dequeueAsTableViewCell<V>(from tableView: UITableView, for indexPath: IndexPath, input: Self.Input, output: ((Self.Output) -> Void)?, parentViewController: V) -> UITableViewCell where V: UIViewController, V: Instantiatable, Self.Environment == V.Environment {
-        return ViewController<Self>.dequeueAsTableViewCell(from: tableView, for: indexPath, input: input, output: output, parentViewController: parentViewController)
+    static func dequeueAsTableViewCell<V>(from tableView: UITableView, for indexPath: IndexPath, input: Self.Input, output: ((Self.Output) -> Void)?, parentViewController: V) -> UITableViewCell where V: UIViewController, V: Instantiatable {
+        return ViewController<Self, V>.dequeueAsTableViewCell(from: tableView, for: indexPath, input: input, output: output, parentViewController: parentViewController)
     }
 }
 

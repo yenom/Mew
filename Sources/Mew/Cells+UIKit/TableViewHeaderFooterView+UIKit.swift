@@ -45,12 +45,12 @@ public extension Instantiatable where Self: UIViewController, Self: Injectable, 
 
 
 // MARK: - TableViewHeaderFooterView with UIView
-public extension Instantiatable where Self: UIView, Self: Injectable {
+public extension Injectable where Self: UIView {
     /// Register dequeueable header/footer class for tableView
     ///
     /// - Parameter tableView: Parent tableView
-    static func registerAsTableViewHeaderFooterView(on tableView: UITableView) {
-        ViewController<Self>.registerAsTableViewHeaderFooterView(on: tableView)
+    static func registerAsTableViewHeaderFooterView<Parent: UIViewController>(on tableView: UITableView, parent: Parent.Type) where Parent: Instantiatable {
+        ViewController<Self, Parent>.registerAsTableViewHeaderFooterView(on: tableView)
     }
     
     /// Dequeue Injectable header/footer instance from tableView
@@ -60,12 +60,12 @@ public extension Instantiatable where Self: UIView, Self: Injectable {
     ///   - input: The View's input.
     ///   - parentViewController: ParentViewController that must has tableView.
     /// - Returns: The header/footer instance that added the View.
-    static func dequeueAsTableViewHeaderFooterView<V>(from tableView: UITableView, input: Self.Input, parentViewController: V) -> UITableViewHeaderFooterView where V: UIViewController, V: Instantiatable, Self.Environment == V.Environment {
-        return ViewController<Self>.dequeueAsTableViewHeaderFooterView(from: tableView, input: input, parentViewController: parentViewController)
+    static func dequeueAsTableViewHeaderFooterView<V>(from tableView: UITableView, input: Self.Input, parentViewController: V) -> UITableViewHeaderFooterView where V: UIViewController, V: Instantiatable {
+        return ViewController<Self, V>.dequeueAsTableViewHeaderFooterView(from: tableView, input: input, parentViewController: parentViewController)
     }
 }
 
-public extension Instantiatable where Self: UIView, Self: Injectable, Self: Emittable {
+public extension Injectable where Self: UIView, Self: Emittable {
     /// Dequeue Injectable/Emittable header/footer instance from tableView
     ///
     /// - Parameters:
@@ -74,7 +74,7 @@ public extension Instantiatable where Self: UIView, Self: Injectable, Self: Emit
     ///   - output: Handler for View's output. Start handling when cell init. Don't replace handler when cell reused.
     ///   - parentViewController: ParentViewController that must has tableView.
     /// - Returns: The header/footer instance that added the View.
-    static func dequeueAsTableViewHeaderFooterView<V>(from tableView: UITableView, input: Self.Input, output: ((Self.Output) -> Void)?, parentViewController: V) -> UITableViewHeaderFooterView where V: UIViewController, V: Instantiatable, Self.Environment == V.Environment {
-        return ViewController<Self>.dequeueAsTableViewHeaderFooterView(from: tableView, input: input, output: output, parentViewController: parentViewController)
+    static func dequeueAsTableViewHeaderFooterView<V>(from tableView: UITableView, input: Self.Input, output: ((Self.Output) -> Void)?, parentViewController: V) -> UITableViewHeaderFooterView where V: UIViewController, V: Instantiatable {
+        return ViewController<Self, V>.dequeueAsTableViewHeaderFooterView(from: tableView, input: input, output: output, parentViewController: parentViewController)
     }
 }
