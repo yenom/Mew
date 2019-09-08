@@ -44,6 +44,36 @@ extension UIView {
     }
 }
 
+final class View: UIView, Injectable, Emittable {
+    typealias Input = Int
+    var parameter: Int?
+    var handler: ((Int) -> ())?
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func input(_ value: Int) {
+        self.parameter = value
+    }
+    
+    func output(_ handler: ((Int) -> Void)?) {
+        self.handler = handler
+    }
+    
+    func fire() {
+        guard let parameter = parameter else {
+            print("parameter has not been injected yet")
+            return
+        }
+        handler?(parameter)
+    }
+}
+
 final class ViewController: UIViewController, Instantiatable, Interactable {
     typealias Input = Int
     var parameter: Int
@@ -76,6 +106,10 @@ final class ViewController: UIViewController, Instantiatable, Interactable {
 
 final class TableViewController: UITableViewController, Instantiatable {
     let environment: Void
+    enum Section: CaseIterable {
+        case cellFromViewController, cellFromView
+    }
+    var sections: [Section] = Section.allCases
     var elements: [Int]
 
     init(with input: [Int], environment: Void) {
@@ -92,10 +126,12 @@ final class TableViewController: UITableViewController, Instantiatable {
         super.viewDidLoad()
         ViewController.registerAsTableViewCell(on: tableView)
         ViewController.registerAsTableViewHeaderFooterView(on: tableView)
+        View.registerAsTableViewCell(on: tableView, parent: type(of: self))
+        View.registerAsTableViewHeaderFooterView(on: tableView, parent: type(of: self))
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return sections.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -103,16 +139,30 @@ final class TableViewController: UITableViewController, Instantiatable {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return ViewController.dequeueAsTableViewCell(from: tableView, for: indexPath, input: elements[indexPath.row], parentViewController: self)
+        switch sections[indexPath.section] {
+        case .cellFromViewController:
+            return ViewController.dequeueAsTableViewCell(from: tableView, for: indexPath, input: elements[indexPath.row], parentViewController: self)
+        case .cellFromView:
+            return View.dequeueAsTableViewCell(from: tableView, for: indexPath, input: elements[indexPath.row], parentViewController: self)
+        }
     }
 
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return ViewController.dequeueAsTableViewHeaderFooterView(from: tableView, input: elements.count, parentViewController: self)
+        switch sections[section] {
+        case .cellFromViewController:
+            return ViewController.dequeueAsTableViewHeaderFooterView(from: tableView, input: elements.count, parentViewController: self)
+        case .cellFromView:
+            return View.dequeueAsTableViewHeaderFooterView(from: tableView, input: elements.count, parentViewController: self)
+        }
     }
 }
 
 final class CollectionViewController: UICollectionViewController, Instantiatable, UICollectionViewDelegateFlowLayout {
     let environment: Void
+    enum Section: CaseIterable {
+        case cellFromViewController, cellFromView
+    }
+    var sections: [Section] = Section.allCases
     var elements: [Int]
 
     init(with input: [Int], environment: Void) {
@@ -129,13 +179,15 @@ final class CollectionViewController: UICollectionViewController, Instantiatable
         super.viewDidLoad()
         ViewController.registerAsCollectionViewCell(on: collectionView!)
         ViewController.registerAsCollectionViewHeaderFooterView(on: collectionView!, for: .header)
+        View.registerAsCollectionViewCell(on: collectionView!, parent: type(of: self))
+        View.registerAsCollectionViewHeaderFooterView(on: collectionView!, for: .header, parent: type(of: self))
         collectionViewLayout.invalidateLayout()
         collectionView?.reloadData()
         collectionView?.layoutIfNeeded()
     }
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+        return sections.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -143,11 +195,21 @@ final class CollectionViewController: UICollectionViewController, Instantiatable
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return ViewController.dequeueAsCollectionViewCell(from: collectionView, for: indexPath, input: elements[indexPath.row], parentViewController: self)
+        switch sections[indexPath.section] {
+        case .cellFromViewController:
+            return ViewController.dequeueAsCollectionViewCell(from: collectionView, for: indexPath, input: elements[indexPath.row], parentViewController: self)
+        case .cellFromView:
+            return View.dequeueAsCollectionViewCell(from: collectionView, for: indexPath, input: elements[indexPath.row], parentViewController: self)
+        }
     }
 
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        return ViewController.dequeueAsCollectionViewHeaderFooterView(from: collectionView, of: kind, for: indexPath, input: elements.count, parentViewController: self)
+        switch sections[indexPath.section] {
+        case .cellFromViewController:
+            return ViewController.dequeueAsCollectionViewHeaderFooterView(from: collectionView, of: kind, for: indexPath, input: elements.count, parentViewController: self)
+        case .cellFromView:
+            return View.dequeueAsCollectionViewHeaderFooterView(from: collectionView, of: kind, for: indexPath, input: elements.count, parentViewController: self)
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {

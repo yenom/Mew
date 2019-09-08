@@ -13,8 +13,8 @@ class TableViewCellTests: XCTestCase {
     func testDequeueTableViewCellWithViewController() {
         let tableViewController = TableViewController(with: [1, 2, 3], environment: ())
         _ = tableViewController.view // load view
-        INJECTABLE: do {
-            let cell = TableViewCell<ViewController>.dequeued(from: tableViewController.tableView, for: IndexPath(row: 0, section: 0), input: 39, parentViewController: tableViewController)
+        INJECTABLE_VC: do {
+            let cell = ViewController.dequeueAsTableViewCell(from: tableViewController.tableView, for: IndexPath(row: 0, section: 0), input: 39, parentViewController: tableViewController) as! TableViewCell<ViewController>
             XCTAssertEqual(cell.content.parameter, 39)
             XCTAssertTrue(cell.contentView.subviewTreeContains(with: cell.content.view))
             XCTAssertEqual(cell.accessoryType, .none)
@@ -22,9 +22,18 @@ class TableViewCellTests: XCTestCase {
             XCTAssertEqual(cell.selectionStyle, .none)
         }
 
-        INTERACTABLE: do {
+        INJECTABLE_VIEW: do {
+            let cell = View.dequeueAsTableViewCell(from: tableViewController.tableView, for: IndexPath(row: 0, section: 0), input: 39, parentViewController: tableViewController) as! TableViewCell<Mew.ViewController<View, TableViewController>>
+            XCTAssertEqual(cell.content.content.parameter, 39)
+            XCTAssertTrue(cell.contentView.subviewTreeContains(with: cell.content.view))
+            XCTAssertEqual(cell.accessoryType, .none)
+            XCTAssertEqual(cell.editingAccessoryType, .none)
+            XCTAssertEqual(cell.selectionStyle, .none)
+        }
+
+        INTERACTABLE_VC: do {
             var expected: Int?
-            let cell = TableViewCell<ViewController>.dequeued(from: tableViewController.tableView, for: IndexPath(row: 0, section: 0), input: 48, output: { expected = $0 }, parentViewController: tableViewController)
+            let cell = ViewController.dequeueAsTableViewCell(from: tableViewController.tableView, for: IndexPath(row: 0, section: 0), input: 48, output: { expected = $0 }, parentViewController: tableViewController) as! TableViewCell<ViewController>
             XCTAssertEqual(cell.content.parameter, 48)
             XCTAssertTrue(cell.contentView.subviewTreeContains(with: cell.content.view))
             XCTAssertEqual(cell.accessoryType, .none)
@@ -34,24 +43,53 @@ class TableViewCellTests: XCTestCase {
             cell.content.fire()
             XCTAssertEqual(expected, 48)
         }
+
+        INTERACTABLE_VIEW: do {
+            var expected: Int?
+            let cell = View.dequeueAsTableViewCell(from: tableViewController.tableView, for: IndexPath(row: 0, section: 0), input: 48, output: { expected = $0 }, parentViewController: tableViewController) as! TableViewCell<Mew.ViewController<View, TableViewController>>
+            XCTAssertEqual(cell.content.content.parameter, 48)
+            XCTAssertTrue(cell.contentView.subviewTreeContains(with: cell.content.view))
+            XCTAssertEqual(cell.accessoryType, .none)
+            XCTAssertEqual(cell.editingAccessoryType, .none)
+            XCTAssertEqual(cell.selectionStyle, .none)
+            XCTAssertNil(expected)
+            cell.content.content.fire()
+            XCTAssertEqual(expected, 48)
+        }
     }
 
     func testDequeueTableViewHeaderFooterWithViewController() {
         let tableViewController = TableViewController(with: [1, 2, 3], environment: ())
         _ = tableViewController.view // load view
-        INJECTABLE: do {
-            let view = TableViewHeaderFooterView<ViewController>.dequeued(from: tableViewController.tableView, input: 39, parentViewController: tableViewController)
+        INJECTABLE_VC: do {
+            let view = ViewController.dequeueAsTableViewHeaderFooterView(from: tableViewController.tableView, input: 39, parentViewController: tableViewController) as! TableViewHeaderFooterView<ViewController>
             XCTAssertEqual(view.content.parameter, 39)
             XCTAssertTrue(view.contentView.subviewTreeContains(with: view.content.view))
         }
 
-        INTERACTABLE: do {
+        INJECTABLE_VIEW: do {
+            let view = View.dequeueAsTableViewHeaderFooterView(from: tableViewController.tableView, input: 39, parentViewController: tableViewController) as! TableViewHeaderFooterView<Mew.ViewController<View, TableViewController>>
+            XCTAssertEqual(view.content.content.parameter, 39)
+            XCTAssertTrue(view.contentView.subviewTreeContains(with: view.content.view))
+        }
+
+        INTERACTABLE_VC: do {
             var expected: Int?
-            let view = TableViewHeaderFooterView<ViewController>.dequeued(from: tableViewController.tableView, input: 48, output: { expected = $0 }, parentViewController: tableViewController)
+            let view = ViewController.dequeueAsTableViewHeaderFooterView(from: tableViewController.tableView, input: 48, output: { expected = $0 }, parentViewController: tableViewController) as! TableViewHeaderFooterView<ViewController>
             XCTAssertEqual(view.content.parameter, 48)
             XCTAssertTrue(view.contentView.subviewTreeContains(with: view.content.view))
             XCTAssertNil(expected)
             view.content.fire()
+            XCTAssertEqual(expected, 48)
+        }
+
+        INTERACTABLE_VIEW: do {
+            var expected: Int?
+            let view = View.dequeueAsTableViewHeaderFooterView(from: tableViewController.tableView, input: 48, output: { expected = $0 }, parentViewController: tableViewController) as! TableViewHeaderFooterView<Mew.ViewController<View, TableViewController>>
+            XCTAssertEqual(view.content.content.parameter, 48)
+            XCTAssertTrue(view.contentView.subviewTreeContains(with: view.content.view))
+            XCTAssertNil(expected)
+            view.content.content.fire()
             XCTAssertEqual(expected, 48)
         }
     }
@@ -71,6 +109,10 @@ class TableViewCellTests: XCTestCase {
             }
             XCTAssertEqual(
                 (tableViewController.tableView.headerView(forSection: 0) as? TableViewHeaderFooterView<ViewController>)?.content.parent,
+                tableViewController
+            )
+            XCTAssertEqual(
+                (tableViewController.tableView.headerView(forSection: 1) as? TableViewHeaderFooterView<Mew.ViewController<View, TableViewController>>)?.content.parent,
                 tableViewController
             )
             parent.dismiss(animated: true, completion: {

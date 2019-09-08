@@ -13,19 +13,35 @@ class CollectionViewCellTests: XCTestCase {
     func testDequeueCollectionViewCellWithViewController() {
         let collectionViewController = CollectionViewController(with: [1, 2, 3], environment: ())
         _ = collectionViewController.view // load view
-        INJECTABLE: do {
-            let cell = CollectionViewCell<ViewController>.dequeued(from: collectionViewController.collectionView!, for: IndexPath(row: 0, section: 0), input: 39, parentViewController: collectionViewController)
+        INJECTABLE_VC: do {
+            let cell = ViewController.dequeueAsCollectionViewCell(from: collectionViewController.collectionView, for: IndexPath(row: 0, section: 0), input: 39, parentViewController: collectionViewController) as! CollectionViewCell<ViewController>
             XCTAssertEqual(cell.content.parameter, 39)
             XCTAssertTrue(cell.contentView.subviewTreeContains(with: cell.content.view))
         }
 
-        INTERACTABLE: do {
+        INJECTABLE_VIEW: do {
+            let cell = View.dequeueAsCollectionViewCell(from: collectionViewController.collectionView, for: IndexPath(row: 0, section: 0), input: 39, parentViewController: collectionViewController) as! CollectionViewCell<Mew.ViewController<View, CollectionViewController>>
+            XCTAssertEqual(cell.content.content.parameter, 39)
+            XCTAssertTrue(cell.contentView.subviewTreeContains(with: cell.content.view))
+        }
+
+        INTERACTABLE_VC: do {
             var expected: Int?
-            let cell = CollectionViewCell<ViewController>.dequeued(from: collectionViewController.collectionView!, for: IndexPath(row: 0, section: 0), input: 48, output: { expected = $0 }, parentViewController: collectionViewController)
+            let cell = ViewController.dequeueAsCollectionViewCell(from: collectionViewController.collectionView, for: IndexPath(row: 0, section: 0), input: 48, output: { expected = $0 }, parentViewController: collectionViewController) as! CollectionViewCell<ViewController>
             XCTAssertEqual(cell.content.parameter, 48)
             XCTAssertTrue(cell.contentView.subviewTreeContains(with: cell.content.view))
             XCTAssertNil(expected)
             cell.content.fire()
+            XCTAssertEqual(expected, 48)
+        }
+
+        INTERACTABLE_VIEW: do {
+            var expected: Int?
+            let cell = View.dequeueAsCollectionViewCell(from: collectionViewController.collectionView, for: IndexPath(row: 0, section: 0), input: 48, output: { expected = $0 }, parentViewController: collectionViewController) as! CollectionViewCell<Mew.ViewController<View, CollectionViewController>>
+            XCTAssertEqual(cell.content.content.parameter, 48)
+            XCTAssertTrue(cell.contentView.subviewTreeContains(with: cell.content.view))
+            XCTAssertNil(expected)
+            cell.content.content.fire()
             XCTAssertEqual(expected, 48)
         }
     }
@@ -33,19 +49,35 @@ class CollectionViewCellTests: XCTestCase {
     func testDequeueCollectionViewHeaderFooterWithViewController() {
         let collectionViewController = CollectionViewController(with: [1, 2, 3], environment: ())
         _ = collectionViewController.view // load view
-        INJECTABLE: do {
-            let view = CollectionReusableView<ViewController>.dequeued(from: collectionViewController.collectionView!, of: CollectionViewSupplementaryKind.header.rawValue, for: IndexPath(item: 0, section: 0), input: 39, parentViewController: collectionViewController)
+        INJECTABLE_VC: do {
+            let view = ViewController.dequeueAsCollectionViewHeaderFooterView(from: collectionViewController.collectionView, of: CollectionViewSupplementaryKind.header.rawValue, for: IndexPath(row: 0, section: 0), input: 39, parentViewController: collectionViewController) as! CollectionReusableView<ViewController>
             XCTAssertEqual(view.content.parameter, 39)
             XCTAssertTrue(view.subviewTreeContains(with: view.content.view))
         }
 
-        INTERACTABLE: do {
+        INJECTABLE_VIEW: do {
+            let view = View.dequeueAsCollectionViewHeaderFooterView(from: collectionViewController.collectionView, of: CollectionViewSupplementaryKind.header.rawValue, for: IndexPath(row: 0, section: 0), input: 39, parentViewController: collectionViewController) as! CollectionReusableView<Mew.ViewController<View, CollectionViewController>>
+            XCTAssertEqual(view.content.content.parameter, 39)
+            XCTAssertTrue(view.subviewTreeContains(with: view.content.view))
+        }
+
+        INTERACTABLE_VC: do {
             var expected: Int?
-            let view = CollectionReusableView<ViewController>.dequeued(from: collectionViewController.collectionView!, of: CollectionViewSupplementaryKind.header.rawValue, for: IndexPath(item: 0, section: 0), input: 48, output: { expected = $0 }, parentViewController: collectionViewController)
+            let view = ViewController.dequeueAsCollectionViewHeaderFooterView(from: collectionViewController.collectionView, of: CollectionViewSupplementaryKind.header.rawValue, for: IndexPath(row: 0, section: 0), input: 48, output: { expected = $0 }, parentViewController: collectionViewController) as! CollectionReusableView<ViewController>
             XCTAssertEqual(view.content.parameter, 48)
             XCTAssertTrue(view.subviewTreeContains(with: view.content.view))
             XCTAssertNil(expected)
             view.content.fire()
+            XCTAssertEqual(expected, 48)
+        }
+
+        INTERACTABLE_VIEW: do {
+            var expected: Int?
+            let view = View.dequeueAsCollectionViewHeaderFooterView(from: collectionViewController.collectionView, of: CollectionViewSupplementaryKind.header.rawValue, for: IndexPath(row: 0, section: 0), input: 48, output: { expected = $0 }, parentViewController: collectionViewController) as! CollectionReusableView<Mew.ViewController<View, CollectionViewController>>
+            XCTAssertEqual(view.content.content.parameter, 48)
+            XCTAssertTrue(view.subviewTreeContains(with: view.content.view))
+            XCTAssertNil(expected)
+            view.content.content.fire()
             XCTAssertEqual(expected, 48)
         }
     }
@@ -65,6 +97,10 @@ class CollectionViewCellTests: XCTestCase {
             }
             XCTAssertEqual(
                 (collectionViewController.collectionView?.supplementaryView(forElementKind: CollectionViewSupplementaryKind.header.rawValue, at: IndexPath(item: 0, section: 0)) as? CollectionReusableView<ViewController>)?.content.parent,
+                collectionViewController
+            )
+            XCTAssertEqual(
+                (collectionViewController.collectionView?.supplementaryView(forElementKind: CollectionViewSupplementaryKind.header.rawValue, at: IndexPath(item: 0, section: 1)) as? CollectionReusableView<Mew.ViewController<View, CollectionViewController>>)?.content.parent,
                 collectionViewController
             )
             parent.dismiss(animated: true, completion: {
