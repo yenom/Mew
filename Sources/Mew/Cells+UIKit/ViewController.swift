@@ -10,10 +10,9 @@ import UIKit
 
 /// ViewController wrapper for View to use UIView as T of TableViewCell.
 /// T should be `UIView & Injecatble & Instantiatable`
-internal class ViewController<T: UIView, Parent: UIViewController>: UIViewController, Instantiatable where Parent: Instantiatable, T: Injectable {
+internal class ViewController<T: UIView, Environment>: UIViewController, Instantiatable where T: Injectable {
     // MARK: - Instantiatable
     typealias Input = T.Input
-    typealias Environment = Parent.Environment
     var environment: Environment
     var content: T = T(frame: .zero)
     required init(with input: Input, environment: Environment) {

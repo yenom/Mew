@@ -126,8 +126,8 @@ final class TableViewController: UITableViewController, Instantiatable {
         super.viewDidLoad()
         ViewController.registerAsTableViewCell(on: tableView)
         ViewController.registerAsTableViewHeaderFooterView(on: tableView)
-        View.registerAsTableViewCell(on: tableView, parent: type(of: self))
-        View.registerAsTableViewHeaderFooterView(on: tableView, parent: type(of: self))
+        View.registerAsTableViewCell(on: tableView, parent: self)
+        View.registerAsTableViewHeaderFooterView(on: tableView, parent: self)
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -179,8 +179,8 @@ final class CollectionViewController: UICollectionViewController, Instantiatable
         super.viewDidLoad()
         ViewController.registerAsCollectionViewCell(on: collectionView!)
         ViewController.registerAsCollectionViewHeaderFooterView(on: collectionView!, for: .header)
-        View.registerAsCollectionViewCell(on: collectionView!, parent: type(of: self))
-        View.registerAsCollectionViewHeaderFooterView(on: collectionView!, for: .header, parent: type(of: self))
+        View.registerAsCollectionViewCell(on: collectionView!, parent: self)
+        View.registerAsCollectionViewHeaderFooterView(on: collectionView!, for: .header, parent: self)
         collectionViewLayout.invalidateLayout()
         collectionView?.reloadData()
         collectionView?.layoutIfNeeded()

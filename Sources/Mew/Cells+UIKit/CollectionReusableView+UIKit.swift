@@ -52,11 +52,23 @@ public extension Instantiatable where Self: UIViewController, Self: Injectable, 
 public extension Injectable where Self: UIView {
     /// Register dequeueable header/footer class for collectionView
     ///
-    /// - Parameter collectionView: Parent collectionView
-    static func registerAsCollectionViewHeaderFooterView<Parent: UIViewController>(on collectionView: UICollectionView, for kind: CollectionViewSupplementaryKind, parent: Parent.Type) where Parent: Instantiatable {
-        ViewController<Self, Parent>.registerAsCollectionViewHeaderFooterView(on: collectionView, for: kind)
+    /// - Parameters:
+    ///   - collectionView: Parent collectionView
+    ///   - kind: SupplementaryView of kind
+    ///   - environmentType: environment type use when dequeue.
+    static func registerAsCollectionViewHeaderFooterView<Environment>(on collectionView: UICollectionView, for kind: CollectionViewSupplementaryKind, environmentType: Environment.Type) {
+        ViewController<Self, Environment>.registerAsCollectionViewHeaderFooterView(on: collectionView, for: kind)
     }
     
+    /// Register dequeueable cell class for tableView
+    ///
+    /// - Parameters:
+    ///   - collectionView: Parent collectionView
+    ///   - kind: SupplementaryView of kind
+    ///   - parent: Parent viewController
+    static func registerAsCollectionViewHeaderFooterView<Parent>(on collectionView: UICollectionView, for kind: CollectionViewSupplementaryKind, parent: Parent) where Parent: Instantiatable {
+        registerAsCollectionViewHeaderFooterView(on: collectionView, for: kind, environmentType: Parent.Environment.self)
+    }
     /// Dequeue Injectable header/footer instance from collectionView
     ///
     /// - Parameters:
@@ -67,7 +79,7 @@ public extension Injectable where Self: UIView {
     ///   - parentViewController: ParentViewController that must has collectionView.
     /// - Returns: The header/footer instance that added the View.
     static func dequeueAsCollectionViewHeaderFooterView<V>(from collectionView: UICollectionView, of kind: String, for indexPath: IndexPath, input: Self.Input, sizeConstraint: SizeConstraint? = nil, parentViewController: V) -> UICollectionReusableView where V: UIViewController, V: Instantiatable {
-        return ViewController<Self, V>.dequeueAsCollectionViewHeaderFooterView(from: collectionView, of: kind, for: indexPath, input: input, sizeConstraint: sizeConstraint, parentViewController: parentViewController)
+        return ViewController<Self, V.Environment>.dequeueAsCollectionViewHeaderFooterView(from: collectionView, of: kind, for: indexPath, input: input, sizeConstraint: sizeConstraint, parentViewController: parentViewController)
     }
 }
 
@@ -83,7 +95,7 @@ public extension Injectable where Self: UIView, Self: Emittable {
     ///   - parentViewController: ParentViewController that must has collectionView.
     /// - Returns: The header/footer instance that added the View.
     static func dequeueAsCollectionViewHeaderFooterView<V>(from collectionView: UICollectionView, of kind: String, for indexPath: IndexPath, input: Self.Input, output: ((Self.Output) -> Void)?, sizeConstraint: SizeConstraint? = nil, parentViewController: V) -> UICollectionReusableView where V: UIViewController, V: Instantiatable {
-        return ViewController<Self, V>.dequeueAsCollectionViewHeaderFooterView(from: collectionView, of: kind, for: indexPath, input: input, output: output, sizeConstraint: sizeConstraint, parentViewController: parentViewController)
+        return ViewController<Self, V.Environment>.dequeueAsCollectionViewHeaderFooterView(from: collectionView, of: kind, for: indexPath, input: input, output: output, sizeConstraint: sizeConstraint, parentViewController: parentViewController)
     }
 }
 

@@ -20,7 +20,7 @@ class CollectionViewCellTests: XCTestCase {
         }
 
         INJECTABLE_VIEW: do {
-            let cell = View.dequeueAsCollectionViewCell(from: collectionViewController.collectionView, for: IndexPath(row: 0, section: 0), input: 39, parentViewController: collectionViewController) as! CollectionViewCell<Mew.ViewController<View, CollectionViewController>>
+            let cell = View.dequeueAsCollectionViewCell(from: collectionViewController.collectionView, for: IndexPath(row: 0, section: 0), input: 39, parentViewController: collectionViewController) as! CollectionViewCell<Mew.ViewController<View, Void>>
             XCTAssertEqual(cell.content.content.parameter, 39)
             XCTAssertTrue(cell.contentView.subviewTreeContains(with: cell.content.view))
         }
@@ -37,7 +37,7 @@ class CollectionViewCellTests: XCTestCase {
 
         INTERACTABLE_VIEW: do {
             var expected: Int?
-            let cell = View.dequeueAsCollectionViewCell(from: collectionViewController.collectionView, for: IndexPath(row: 0, section: 0), input: 48, output: { expected = $0 }, parentViewController: collectionViewController) as! CollectionViewCell<Mew.ViewController<View, CollectionViewController>>
+            let cell = View.dequeueAsCollectionViewCell(from: collectionViewController.collectionView, for: IndexPath(row: 0, section: 0), input: 48, output: { expected = $0 }, parentViewController: collectionViewController) as! CollectionViewCell<Mew.ViewController<View, Void>>
             XCTAssertEqual(cell.content.content.parameter, 48)
             XCTAssertTrue(cell.contentView.subviewTreeContains(with: cell.content.view))
             XCTAssertNil(expected)
@@ -56,7 +56,7 @@ class CollectionViewCellTests: XCTestCase {
         }
 
         INJECTABLE_VIEW: do {
-            let view = View.dequeueAsCollectionViewHeaderFooterView(from: collectionViewController.collectionView, of: CollectionViewSupplementaryKind.header.rawValue, for: IndexPath(row: 0, section: 0), input: 39, parentViewController: collectionViewController) as! CollectionReusableView<Mew.ViewController<View, CollectionViewController>>
+            let view = View.dequeueAsCollectionViewHeaderFooterView(from: collectionViewController.collectionView, of: CollectionViewSupplementaryKind.header.rawValue, for: IndexPath(row: 0, section: 0), input: 39, parentViewController: collectionViewController) as! CollectionReusableView<Mew.ViewController<View, Void>>
             XCTAssertEqual(view.content.content.parameter, 39)
             XCTAssertTrue(view.subviewTreeContains(with: view.content.view))
         }
@@ -73,7 +73,7 @@ class CollectionViewCellTests: XCTestCase {
 
         INTERACTABLE_VIEW: do {
             var expected: Int?
-            let view = View.dequeueAsCollectionViewHeaderFooterView(from: collectionViewController.collectionView, of: CollectionViewSupplementaryKind.header.rawValue, for: IndexPath(row: 0, section: 0), input: 48, output: { expected = $0 }, parentViewController: collectionViewController) as! CollectionReusableView<Mew.ViewController<View, CollectionViewController>>
+            let view = View.dequeueAsCollectionViewHeaderFooterView(from: collectionViewController.collectionView, of: CollectionViewSupplementaryKind.header.rawValue, for: IndexPath(row: 0, section: 0), input: 48, output: { expected = $0 }, parentViewController: collectionViewController) as! CollectionReusableView<Mew.ViewController<View, Void>>
             XCTAssertEqual(view.content.content.parameter, 48)
             XCTAssertTrue(view.subviewTreeContains(with: view.content.view))
             XCTAssertNil(expected)
@@ -100,7 +100,7 @@ class CollectionViewCellTests: XCTestCase {
                 collectionViewController
             )
             XCTAssertEqual(
-                (collectionViewController.collectionView?.supplementaryView(forElementKind: CollectionViewSupplementaryKind.header.rawValue, at: IndexPath(item: 0, section: 1)) as? CollectionReusableView<Mew.ViewController<View, CollectionViewController>>)?.content.parent,
+                (collectionViewController.collectionView?.supplementaryView(forElementKind: CollectionViewSupplementaryKind.header.rawValue, at: IndexPath(item: 0, section: 1)) as? CollectionReusableView<Mew.ViewController<View, Void>>)?.content.parent,
                 collectionViewController
             )
             parent.dismiss(animated: true, completion: {
