@@ -8,6 +8,7 @@
 
 import UIKit
 import Mew
+import XCTest
 
 extension UIView {
     private static func contains(_ view: UIView, where condition: (UIView) -> Bool) -> Bool {
@@ -381,4 +382,9 @@ final class AutolayoutCollectionViewController: UICollectionViewController, Inst
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         return AutolayoutViewController.dequeueAsCollectionViewCell(from: collectionView, for: indexPath, input: elements[indexPath.row], parentViewController: self)
     }
+}
+
+func XCTAssertEqual(_ expression1: CGSize, _ expression2: CGSize, accurancy: CGFloat, file: StaticString = #file, line: UInt = #line) {
+    XCTAssertEqual(expression1.height, expression2.height, accuracy: accurancy, file: file, line: line)
+    XCTAssertEqual(expression1.width, expression2.width, accuracy: accurancy, file: file, line: line)
 }

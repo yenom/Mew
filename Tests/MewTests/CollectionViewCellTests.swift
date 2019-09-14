@@ -151,10 +151,10 @@ class CollectionViewCellTests: XCTestCase {
                 let cells = collectionViewController.collectionView!.indexPathsForVisibleItems.sorted().compactMap { collectionViewController.collectionView!.cellForItem(at: $0) }
                 zip(expects, cells).forEach { expect, cell in
                     let expectedSize = CGSize(width: min(collectionViewController.collectionView!.frame.width - 40.0, 200 + expect.additionalWidth), height: 200 + expect.additionalHeight)
-                    XCTAssertEqual(cell.frame.size, expectedSize)
-                    XCTAssertEqual(cell.contentView.frame.size, expectedSize)
+                    XCTAssertEqual(cell.frame.size, expectedSize, accurancy: 1.0)
+                    XCTAssertEqual(cell.contentView.frame.size, expectedSize, accurancy: 1.0)
                     let childViewController = collectionViewController.children.first(where: { $0.view.superview == cell.contentView }) as! AutolayoutViewController
-                    XCTAssertEqual(childViewController.view.frame.size, expectedSize)
+                    XCTAssertEqual(childViewController.view.frame.size, expectedSize, accurancy: 1.0)
                     XCTAssertFalse(cell.hasAmbiguousLayout)
                 }
             }
@@ -171,10 +171,10 @@ class CollectionViewCellTests: XCTestCase {
                 let cells = collectionViewController.collectionView!.indexPathsForVisibleItems.sorted().compactMap { collectionViewController.collectionView!.cellForItem(at: $0) }
                 zip(expects, cells).forEach { expect, cell in
                     let expectedSize = CGSize(width: 200 + expect.additionalWidth, height: min(collectionViewController.collectionView!.frame.height - 40.0, 200 + expect.additionalHeight))
-                    XCTAssertEqual(cell.frame.size, expectedSize)
-                    XCTAssertEqual(cell.contentView.frame.size, expectedSize)
+                    XCTAssertEqual(cell.frame.size, expectedSize, accurancy: 1.0)
+                    XCTAssertEqual(cell.contentView.frame.size, expectedSize, accurancy: 1.0)
                     let childViewController = collectionViewController.children.first(where: { $0.view.superview == cell.contentView }) as! AutolayoutViewController
-                    XCTAssertEqual(childViewController.view.frame.size, expectedSize)
+                    XCTAssertEqual(childViewController.view.frame.size, expectedSize, accurancy: 1.0)
                     XCTAssertFalse(cell.hasAmbiguousLayout)
                 }
             }
