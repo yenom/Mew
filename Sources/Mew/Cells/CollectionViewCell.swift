@@ -51,6 +51,7 @@ public extension CollectionViewCell {
     /// Register dequeueable cell class for collectionView
     ///
     /// - Parameter collectionView: Parent collectionView
+    @available(*, deprecated, message: "Please use YourViewController.register(to:)")
     static func register(to collectionView: UICollectionView) {
         collectionView.register(CollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
     }
@@ -66,6 +67,7 @@ public extension CollectionViewCell where T: Injectable, T: Instantiatable {
     ///   - sizeConstraint: Requirement maximum size of Cell.
     ///   - parentViewController: ParentViewController that must has collectionView.
     /// - Returns: The Cell instance that added the ViewController.view, and the ViewController have injected dependency, VC hierarchy.
+    @available(*, deprecated, message: "Please use YourViewController.dequeueReusableSupplementaryView(from:for:input:sizeConstraint:parentViewController:) instead")
     static func dequeued<V>(from collectionView: UICollectionView, for indexPath: IndexPath, input: T.Input, sizeConstraint: SizeConstraint? = nil, parentViewController: V) -> CollectionViewCell where V: UIViewController, V: Instantiatable, T.Environment == V.Environment {
         // Swift4.1 has bug that `Cast from 'X' to unrelated type 'Y<T>' always fails` if T is class and has protocol condition.
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionViewCell.reuseIdentifier, for: indexPath) as Any as! CollectionViewCell
@@ -90,6 +92,7 @@ public extension CollectionViewCell where T: Injectable, T: Instantiatable, T: E
     ///   - sizeConstraint: Requirement maximum size of Cell.
     ///   - parentViewController: ParentViewController that must has collectionView.
     /// - Returns: The Cell instance that added the ViewController.
+    @available(*, deprecated, message: "Please use YourViewController.dequeueReusableSupplementaryView(from:for:input:output:sizeConstraint:parentViewController:) instead")
     static func dequeued<V>(from collectionView: UICollectionView, for indexPath: IndexPath, input: T.Input, output: ((T.Output) -> Void)?, sizeConstraint: SizeConstraint? = nil, parentViewController: V) -> CollectionViewCell where V: UIViewController, V: Instantiatable, T.Environment == V.Environment {
         // Swift4.1 has bug that `Cast from 'X' to unrelated type 'Y<T>' always fails` if T is class and has protocol condition.
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionViewCell.reuseIdentifier, for: indexPath) as Any as! CollectionViewCell

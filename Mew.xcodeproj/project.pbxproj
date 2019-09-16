@@ -18,6 +18,11 @@
 		29350EB622BF04C0003A86B4 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29350EB222BF04BF003A86B4 /* TableViewCell.swift */; };
 		29350EB722BF04C0003A86B4 /* TableViewHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29350EB322BF04C0003A86B4 /* TableViewHeaderFooterView.swift */; };
 		29350EB822BF04C0003A86B4 /* CollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29350EB422BF04C0003A86B4 /* CollectionReusableView.swift */; };
+		296A6AA623169CA2008733C6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296A6AA523169CA2008733C6 /* ViewController.swift */; };
+		296A6AAA2316A6B5008733C6 /* TableViewCell+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296A6AA92316A6B5008733C6 /* TableViewCell+UIKit.swift */; };
+		296A6AAE2316A957008733C6 /* TableViewHeaderFooterView+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296A6AAD2316A957008733C6 /* TableViewHeaderFooterView+UIKit.swift */; };
+		296A6AB12316AA1A008733C6 /* CollectionReusableView+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296A6AB02316AA1A008733C6 /* CollectionReusableView+UIKit.swift */; };
+		296A6AB32316ACF1008733C6 /* CollectionViewCell+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296A6AB22316ACF1008733C6 /* CollectionViewCell+UIKit.swift */; };
 		29D7467922C2F85900C9FCF4 /* EnvironmentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D7467822C2F85900C9FCF4 /* EnvironmentRequest.swift */; };
 		29D7468722C2FC2700C9FCF4 /* ViewControllerRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D7468622C2FC2700C9FCF4 /* ViewControllerRequest.swift */; };
 		29D7468922C2FC3000C9FCF4 /* ViewControllerResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D7468822C2FC3000C9FCF4 /* ViewControllerResponse.swift */; };
@@ -67,6 +72,11 @@
 		29350EB222BF04BF003A86B4 /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		29350EB322BF04C0003A86B4 /* TableViewHeaderFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewHeaderFooterView.swift; sourceTree = "<group>"; };
 		29350EB422BF04C0003A86B4 /* CollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionReusableView.swift; sourceTree = "<group>"; };
+		296A6AA523169CA2008733C6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		296A6AA92316A6B5008733C6 /* TableViewCell+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TableViewCell+UIKit.swift"; sourceTree = "<group>"; };
+		296A6AAD2316A957008733C6 /* TableViewHeaderFooterView+UIKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TableViewHeaderFooterView+UIKit.swift"; sourceTree = "<group>"; };
+		296A6AB02316AA1A008733C6 /* CollectionReusableView+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CollectionReusableView+UIKit.swift"; sourceTree = "<group>"; };
+		296A6AB22316ACF1008733C6 /* CollectionViewCell+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CollectionViewCell+UIKit.swift"; sourceTree = "<group>"; };
 		29D7467822C2F85900C9FCF4 /* EnvironmentRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentRequest.swift; sourceTree = "<group>"; };
 		29D7468622C2FC2700C9FCF4 /* ViewControllerRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerRequest.swift; sourceTree = "<group>"; };
 		29D7468822C2FC3000C9FCF4 /* ViewControllerResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerResponse.swift; sourceTree = "<group>"; };
@@ -115,6 +125,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		296A6AAF2316A993008733C6 /* Cells+UIKit */ = {
+			isa = PBXGroup;
+			children = (
+				296A6AA523169CA2008733C6 /* ViewController.swift */,
+				296A6AB22316ACF1008733C6 /* CollectionViewCell+UIKit.swift */,
+				296A6AB02316AA1A008733C6 /* CollectionReusableView+UIKit.swift */,
+				296A6AA92316A6B5008733C6 /* TableViewCell+UIKit.swift */,
+				296A6AAD2316A957008733C6 /* TableViewHeaderFooterView+UIKit.swift */,
+			);
+			path = "Cells+UIKit";
+			sourceTree = "<group>";
+		};
 		29D7467722C2F7B700C9FCF4 /* Environment */ = {
 			isa = PBXGroup;
 			children = (
@@ -128,8 +150,8 @@
 		D2568DD7214BC00A00FCA44A /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				29350EB422BF04C0003A86B4 /* CollectionReusableView.swift */,
 				29350EB122BF04BF003A86B4 /* CollectionViewCell.swift */,
+				29350EB422BF04C0003A86B4 /* CollectionReusableView.swift */,
 				29350EB222BF04BF003A86B4 /* TableViewCell.swift */,
 				29350EB322BF04C0003A86B4 /* TableViewHeaderFooterView.swift */,
 			);
@@ -245,6 +267,7 @@
 				D279A3042136B31A007B045A /* Protocols */,
 				D279A3052136B31F007B045A /* ContainerView */,
 				D2568DD7214BC00A00FCA44A /* Cells */,
+				296A6AAF2316A993008733C6 /* Cells+UIKit */,
 			);
 			name = Mew;
 			path = Sources/Mew;
@@ -386,6 +409,7 @@
 			buildActionMask = 0;
 			files = (
 				29350EAB22BF0491003A86B4 /* CellProtocol.swift in Sources */,
+				296A6AB32316ACF1008733C6 /* CollectionViewCell+UIKit.swift in Sources */,
 				29D7468922C2FC3000C9FCF4 /* ViewControllerResponse.swift in Sources */,
 				D25C01C821620C0100935A18 /* BackwardCompatibility.swift in Sources */,
 				29350EB522BF04C0003A86B4 /* CollectionViewCell.swift in Sources */,
@@ -395,10 +419,14 @@
 				29350EB622BF04C0003A86B4 /* TableViewCell.swift in Sources */,
 				29350EA922BF0491003A86B4 /* Emittable.swift in Sources */,
 				29D7467922C2F85900C9FCF4 /* EnvironmentRequest.swift in Sources */,
+				296A6AB12316AA1A008733C6 /* CollectionReusableView+UIKit.swift in Sources */,
 				29350EB722BF04C0003A86B4 /* TableViewHeaderFooterView.swift in Sources */,
 				29350EB022BF04AB003A86B4 /* ContainerView.swift in Sources */,
+				296A6AA623169CA2008733C6 /* ViewController.swift in Sources */,
+				296A6AAE2316A957008733C6 /* TableViewHeaderFooterView+UIKit.swift in Sources */,
 				29350EB822BF04C0003A86B4 /* CollectionReusableView.swift in Sources */,
 				29350EA722BF0491003A86B4 /* Injectable.swift in Sources */,
+				296A6AAA2316A6B5008733C6 /* TableViewCell+UIKit.swift in Sources */,
 				29350EAF22BF04AB003A86B4 /* Container.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
