@@ -57,6 +57,15 @@ public extension TableViewHeaderFooterView {
     /// - Parameter tableView: Parent tableView
     @available(*, deprecated, message: "Please use YourViewController.registerAsHeaderFooter(to:) instead")
     static func register(to tableView: UITableView) {
+        internalRegister(to: tableView)
+    }
+}
+
+internal extension TableViewHeaderFooterView {
+    /// Register dequeueable header/footer class for tableView
+    ///
+    /// - Parameter tableView: Parent tableView
+    static func internalRegister(to tableView: UITableView) {
         tableView.register(TableViewHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: reuseIdentifier)
     }
 }
@@ -71,6 +80,19 @@ public extension TableViewHeaderFooterView where T: Injectable, T: Instantiatabl
     /// - Returns: The header/footer instance that added the ViewController.view, and the ViewController have injected dependency, VC hierarchy.
     @available(*, deprecated, message: "Please use YourViewController.dequeueHeaderFooterView(from:input:parentViewController:) instead")
     static func dequeued<V>(from tableView: UITableView, input: T.Input, parentViewController: V) -> TableViewHeaderFooterView where V: UIViewController, V: Instantiatable, T.Environment == V.Environment {
+        return internalDequeued(from: tableView, input: input, parentViewController: parentViewController)
+    }
+}
+
+internal extension TableViewHeaderFooterView where T: Injectable, T: Instantiatable {
+    /// Dequeue header/footer instance from tableView
+    ///
+    /// - Parameters:
+    ///   - tableView: Parent tableView that must have registered header/footer.
+    ///   - input: The ViewController's input.
+    ///   - parentViewController: ParentViewController that must has tableView.
+    /// - Returns: The header/footer instance that added the ViewController.view, and the ViewController have injected dependency, VC hierarchy.
+    static func internalDequeued<V>(from tableView: UITableView, input: T.Input, parentViewController: V) -> TableViewHeaderFooterView where V: UIViewController, V: Instantiatable, T.Environment == V.Environment {
         // Swift4.1 has bug that `Cast from 'X' to unrelated type 'Y<T>' always fails` if T is class and has protocol condition.
         let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: TableViewHeaderFooterView.reuseIdentifier) as Any as! TableViewHeaderFooterView
         if view.contentViewController == nil {
@@ -93,6 +115,20 @@ public extension TableViewHeaderFooterView where T: Injectable, T: Instantiatabl
     /// - Returns: The header/footer instance that added the ViewController.
     @available(*, deprecated, message: "Please use YourViewController.dequeueHeaderFooterView(from:input:output:parentViewController:) instead")
     static func dequeued<V>(from tableView: UITableView, input: T.Input, output: ((T.Output) -> Void)?, parentViewController: V) -> TableViewHeaderFooterView where V: UIViewController, V: Instantiatable, T.Environment == V.Environment {
+        return internalDequeued(from: tableView, input: input, output: output, parentViewController: parentViewController)
+    }
+}
+
+internal extension TableViewHeaderFooterView where T: Injectable, T: Instantiatable, T: Emittable {
+    /// Dequeue header/footer instance from tableView
+    ///
+    /// - Parameters:
+    ///   - tableView: Parent tableView that must have registered header/footer.
+    ///   - input: The ViewController's input.
+    ///   - output: Handler for ViewController's output. Start handling when cell init. Don't replace handler when cell reused.
+    ///   - parentViewController: ParentViewController that must has tableView.
+    /// - Returns: The header/footer instance that added the ViewController.
+    static func internalDequeued<V>(from tableView: UITableView, input: T.Input, output: ((T.Output) -> Void)?, parentViewController: V) -> TableViewHeaderFooterView where V: UIViewController, V: Instantiatable, T.Environment == V.Environment {
         // Swift4.1 has bug that `Cast from 'X' to unrelated type 'Y<T>' always fails` if T is class and has protocol condition.
         let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: TableViewHeaderFooterView.reuseIdentifier) as Any as! TableViewHeaderFooterView
         if view.contentViewController == nil {
