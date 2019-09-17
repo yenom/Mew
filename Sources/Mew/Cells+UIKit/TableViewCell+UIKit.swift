@@ -14,7 +14,7 @@ public extension Instantiatable where Self: UIViewController, Self: Injectable {
     ///
     /// - Parameter tableView: Parent tableView
     static func registerAsTableViewCell(on tableView: UITableView) {
-        TableViewCell<Self>.register(to: tableView)
+        TableViewCell<Self>.internalRegister(to: tableView)
     }
     
     /// Dequeue Injectable cell instance from tableView
@@ -26,7 +26,7 @@ public extension Instantiatable where Self: UIViewController, Self: Injectable {
     ///   - parentViewController: ParentViewController that must has tableView.
     /// - Returns: The Cell instance that added the ViewController.view, and the ViewController have injected dependency, VC hierarchy.
     static func dequeueAsTableViewCell<V>(from tableView: UITableView, for indexPath: IndexPath, input: Self.Input, parentViewController: V) -> UITableViewCell where V: UIViewController, V: Instantiatable, Self.Environment == V.Environment {
-        return TableViewCell<Self>.dequeued(from: tableView, for: indexPath, input: input, parentViewController: parentViewController)
+        return TableViewCell<Self>.internalDequeued(from: tableView, for: indexPath, input: input, parentViewController: parentViewController)
     }
 }
 
@@ -41,7 +41,7 @@ public extension Instantiatable where Self: UIViewController, Self: Injectable, 
     ///   - parentViewController: ParentViewController that must has tableView.
     /// - Returns: The Cell instance that added the ViewController.
     static func dequeueAsTableViewCell<V>(from tableView: UITableView, for indexPath: IndexPath, input: Self.Input, output: ((Self.Output) -> Void)?, parentViewController: V) -> UITableViewCell where V: UIViewController, V: Instantiatable, Self.Environment == V.Environment {
-        return TableViewCell<Self>.dequeued(from: tableView, for: indexPath, input: input, output: output, parentViewController: parentViewController)
+        return TableViewCell<Self>.internalDequeued(from: tableView, for: indexPath, input: input, output: output, parentViewController: parentViewController)
     }
 }
 

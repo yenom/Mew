@@ -5,35 +5,41 @@ iOS MicroViewController support library.
 ## Installation
 
 ### Carthage
-The latest version is 0.2.0
+The latest version is 0.5.1
 ```
-github "mercari/Mew"
+github "yenom/Mew"
 ```
 
 ### CocoaPods
 ```
-pod 'Mew', :git => 'https://github.com/mercari/Mew.git'
+pod 'Mew', :git => 'https://github.com/yenom/Mew.git'
 ```
 
 ## Usage
 
 ### ContainerView with Manual Control 
 1. Add `ContainerView` in your xib/code.
-1. Add childViewController using `containerView.addArrangedViewController`.
-1. 🎉
+2. Add childViewController using `containerView.addArrangedViewController`.
+3. 🎉
 
 ### ContainerView with `Container<T>`
 1. Conform your ViewController classes as `Instantiatable`.
-1. Conform your ViewController classes `Injectable`, `Interactable` if need.
-1. Add `ContainerView` in your xib/code.
-1. Add childViewController using `containerView.makeContainer`.
-1. 🎉
+2. Conform your ViewController classes `Injectable`, `Interactable` if need.
+3. Add `ContainerView` in your xib/code.
+4. Add childViewController using `containerView.makeContainer`.
+5. 🎉
 
-### Cells
+### Cells (ViewController)
 1. Conform your TableViewController class as `Instantiatable`.
-1. Conform your CellViewController class as `Instantiatable`, `Injectable`.
-1. `TableViewCell<CellViewController>.register`, `TableViewCell<CellViewController>.dequeued` support TableView cells.
-1. 🎉
+2. Conform your CellViewController class as `Instantiatable`, `Injectable`.
+3. `CellViewController.registerAsTableViewCell`, `CellViewController.dequeuedAdTableViewCell` support TableView cells.
+4. 🎉
+
+### Cells (View)
+1. Conform your TableViewController class as `Instantiatable`.
+2. Conform your CellView class as `Injectable`.
+3. `CellView.registerAsTableViewCell`, `CellView.dequeuedAdTableViewCell` support TableView cells.
+4. 🎉
 
 ## Reference
 My Presentation.

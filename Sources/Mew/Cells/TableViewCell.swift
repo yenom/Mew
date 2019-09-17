@@ -48,6 +48,15 @@ public extension TableViewCell {
     /// - Parameter tableView: Parent tableView
     @available(*, deprecated, message: "Please use YourViewController.register(to:) instead")
     static func register(to tableView: UITableView) {
+        internalRegister(to: tableView)
+    }
+}
+
+internal extension TableViewCell {
+    /// Register dequeueable cell class for tableView
+    ///
+    /// - Parameter tableView: Parent tableView
+    static func internalRegister(to tableView: UITableView) {
         tableView.register(TableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
     }
 }
@@ -63,6 +72,20 @@ public extension TableViewCell where T: Injectable, T: Instantiatable {
     /// - Returns: The Cell instance that added the ViewController.view, and the ViewController have injected dependency, VC hierarchy.
     @available(*, deprecated, message: "Please use YourViewController.dequeueCell(from:input:parentViewController:) instead")
     static func dequeued<V>(from tableView: UITableView, for indexPath: IndexPath, input: T.Input, parentViewController: V) -> TableViewCell where V: UIViewController, V: Instantiatable, T.Environment == V.Environment {
+        return internalDequeued(from: tableView, for: indexPath, input: input, parentViewController: parentViewController)
+    }
+}
+
+internal extension TableViewCell where T: Injectable, T: Instantiatable {
+    /// Dequeue cell instance from tableView
+    ///
+    /// - Parameters:
+    ///   - tableView: Parent tableView that must have registered cell.
+    ///   - indexPath: indexPath for dequeue.
+    ///   - input: The ViewController's input.
+    ///   - parentViewController: ParentViewController that must has tableView.
+    /// - Returns: The Cell instance that added the ViewController.view, and the ViewController have injected dependency, VC hierarchy.
+    static func internalDequeued<V>(from tableView: UITableView, for indexPath: IndexPath, input: T.Input, parentViewController: V) -> TableViewCell where V: UIViewController, V: Instantiatable, T.Environment == V.Environment {
         // Swift4.1 has bug that `Cast from 'X' to unrelated type 'Y<T>' always fails` if T is class and has protocol condition.
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCell.reuseIdentifier, for: indexPath) as Any as! TableViewCell
         if cell.contentViewController == nil {
@@ -87,6 +110,21 @@ public extension TableViewCell where T: Injectable, T: Instantiatable, T: Emitta
     /// - Returns: The Cell instance that added the ViewController.
     @available(*, deprecated, message: "Please use YourViewController.dequeueCell(from:input:output:parentViewController:) instead")
     static func dequeued<V>(from tableView: UITableView, for indexPath: IndexPath, input: T.Input, output: ((T.Output) -> Void)?, parentViewController: V) -> TableViewCell where V: UIViewController, V: Instantiatable, T.Environment == V.Environment {
+        return internalDequeued(from: tableView, for: indexPath, input: input, output: output, parentViewController: parentViewController)
+    }
+}
+
+internal extension TableViewCell where T: Injectable, T: Instantiatable, T: Emittable {
+    /// Dequeue cell instance from tableView
+    ///
+    /// - Parameters:
+    ///   - tableView: Parent tableView that must have registered cell.
+    ///   - indexPath: indexPath for dequeue.
+    ///   - input: The ViewController's input.
+    ///   - output: Handler for ViewController's output. Start handling when cell init. Don't replace handler when cell reused.
+    ///   - parentViewController: ParentViewController that must has tableView.
+    /// - Returns: The Cell instance that added the ViewController.
+    static func internalDequeued<V>(from tableView: UITableView, for indexPath: IndexPath, input: T.Input, output: ((T.Output) -> Void)?, parentViewController: V) -> TableViewCell where V: UIViewController, V: Instantiatable, T.Environment == V.Environment {
         // Swift4.1 has bug that `Cast from 'X' to unrelated type 'Y<T>' always fails` if T is class and has protocol condition.
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCell.reuseIdentifier, for: indexPath) as Any as! TableViewCell
         if cell.contentViewController == nil {

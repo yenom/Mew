@@ -14,7 +14,7 @@ public extension Instantiatable where Self: UIViewController, Self: Injectable {
     ///
     /// - Parameter tableView: Parent tableView
     static func registerAsTableViewHeaderFooterView(on tableView: UITableView) {
-        TableViewHeaderFooterView<Self>.register(to: tableView)
+        TableViewHeaderFooterView<Self>.internalRegister(to: tableView)
     }
     
     /// Dequeue Injectable header/footer instance from tableView
@@ -25,7 +25,7 @@ public extension Instantiatable where Self: UIViewController, Self: Injectable {
     ///   - parentViewController: ParentViewController that must has tableView.
     /// - Returns: The header/footer instance that added the ViewController.view, and the ViewController have injected dependency, VC hierarchy.
     static func dequeueAsTableViewHeaderFooterView<V>(from tableView: UITableView, input: Self.Input, parentViewController: V) -> UITableViewHeaderFooterView where V: UIViewController, V: Instantiatable, Self.Environment == V.Environment {
-        return TableViewHeaderFooterView<Self>.dequeued(from: tableView, input: input, parentViewController: parentViewController)
+        return TableViewHeaderFooterView<Self>.internalDequeued(from: tableView, input: input, parentViewController: parentViewController)
     }
 }
 
@@ -39,7 +39,7 @@ public extension Instantiatable where Self: UIViewController, Self: Injectable, 
     ///   - parentViewController: ParentViewController that must has tableView.
     /// - Returns: The header/footer instance that added the ViewController.
     static func dequeueAsTableViewHeaderFooterView<V>(from tableView: UITableView, input: Self.Input, output: ((Self.Output) -> Void)?, parentViewController: V) -> UITableViewHeaderFooterView where V: UIViewController, V: Instantiatable, Self.Environment == V.Environment {
-        return TableViewHeaderFooterView<Self>.dequeued(from: tableView, input: input, output: output, parentViewController: parentViewController)
+        return TableViewHeaderFooterView<Self>.internalDequeued(from: tableView, input: input, output: output, parentViewController: parentViewController)
     }
 }
 
